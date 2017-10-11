@@ -24,7 +24,7 @@ $$
 $$
 ### 参数方程
 ####1. 以大地经度L及归化纬度u为参数
-![](../images/归化纬度.jpg)
+![picture1](../images/归化纬度.jpg)
 起始子午面参数方程：
 $$
 X_0=a\cos u,\quad Y_0=0,\quad Z_0=b\sin u \qquad (A)
