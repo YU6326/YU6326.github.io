@@ -1,11 +1,11 @@
 <!DOCTYPE html>
   <html>
     <head>
-      <title>index</title>
+      <title>实验一报告</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\wode\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.2.9\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
       
       
       
@@ -208,16 +208,80 @@ code.language-yaml {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview   ">
-      <h1 class="mume-header" id="&#x8FD9;&#x662F;&#x6211;&#x7684;&#x4E00;&#x4E2A;github-page">这是我的一个Github page</h1>
+      <h1 class="mume-header" id="&#x5B9E;&#x9A8C;&#x4E00;&#x62A5;&#x544A;">实验一报告</h1>
 
-<h2 class="mume-header" id="&#x5730;&#x7406;&#x7A7A;&#x95F4;&#x6570;&#x636E;&#x5E93;&#x539F;&#x7406;spdb-test1html"><a href="spdb-test1.html">地理空间数据库原理</a></h2>
+<h2 class="mume-header" id="&#x73AF;&#x5883;&#x53CA;&#x6570;&#x636E;">环境及数据</h2>
 
+<p>Arcgis 10.3<br>
+公邮上的数据，共6幅</p>
+<h2 class="mume-header" id="&#x5B9E;&#x9A8C;&#x6B65;&#x9AA4;">实验步骤</h2>
+
+<ol>
+<li>针对地图创建不同的数据框
+<ul>
+<li>对其中的4幅上海地图创建数据框及空投影坐标系<br>
+方法：数据框-&gt;属性-&gt;坐标系-&gt;新建坐标系-&gt;输入上海城市坐标系参数-&gt;确定。</li>
+<li>对两幅梯形分幅地图创建相应的数据框和坐标系<br>
+方法：通过观察可以发现：<em>h51g046001-frame.tif</em>和<em>dxt10kFrame.tif</em>都是西安80坐标系、高斯克吕格投影，前一幅在21号带，后一幅在20号带，找到对应项创建坐标系。</li>
+</ul>
+</li>
+<li>画不同的矩形以便地理配准
+<ol>
+<li>在ArcMap目录窗口中创建对应的 <em>.shp</em>文件。要素类型选为线</li>
+<li>打开编辑器，画出对应的矩形框和田字框，以便之后进行地理配准。<br>
+先用矩形工具用角点画出矩形，再通过中点捕捉画出田形。</li>
+<li>编辑完毕后，保存编辑内容，停止编辑。</li>
+</ol>
+</li>
+<li>进行地理配准
+<ol>
+<li>调出地理配准工具栏<br>
+在菜单栏右键单击，钩上地理配准选项。</li>
+<li>选择要进行配准的文件<br>
+这个容易忘记，要注意。</li>
+<li>建立对应点的链接<br>
+选择添加控制点，将地图的框标和矩形对应的角点链接起来。<br>
+<em>tips：</em> 先建立两到三条链接，点击更新显示，之后的链接建立更方便。<br>
+矩形分幅地图通过建立连线进行，梯形分幅地图输入角点的经纬度</li>
+<li>确定变化类型<br>
+四个对应点用仿射变换<br>
+九个对应点用二阶多项式</li>
+<li>链接建立好之后查看链接表，查看对应的残差符不符合要求<br>
+不符合要求的话，要删除链接，重新建立链接。</li>
+<li>确定无误之后点击更新地理配准或校正。<br>
+<strong>注意：</strong> 更新地理配准是在原图上改，校正是在创建新的图，这里我选择的是更新地理配准。</li>
+</ol>
+</li>
+</ol>
+<h2 class="mume-header" id="&#x95EE;&#x9898;">问题</h2>
+
+<ol>
+<li><em>.tif</em> 文件显示不出来<br>
+有时候是缩放比例不正确，有时候可以通过调显示方式可以解决，有时候是数据框没有激活。</li>
+<li>在<em>h51...</em> 那幅图中不知道哪个是经纬格网。<br>
+那幅图角点附近线很多，难以分清。<br>
+我认为左下角的经纬格网点是05'上面的点，其余的类似。</li>
+<li>在<em>dxt10...</em> 那幅图中经纬格网定出点后，读出公里格网的点的坐标，差距较大<br>
+原因未知。</li>
+</ol>
+<h2 class="mume-header" id="&#x5B9E;&#x9A8C;&#x622A;&#x56FE;">实验截图</h2>
+
+<p><img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\coor1.png" alt="coor1"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\coor2.png" alt="coor2"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\rec.png" alt="rec"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\rms.png" alt="rms"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\01.png" alt="01"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\02.png" alt="02"><br>
+<img src="%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%88%AA%E5%9B%BE\03.png" alt="03"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#%E8%BF%99%E6%98%AF%E6%88%91%E7%9A%84%E4%B8%80%E4%B8%AAgithub-page">这是我的一个Github page</a>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E4%B8%80%E6%8A%A5%E5%91%8A">实验一报告</a>
 <ul>
-<li><a href="#%E5%9C%B0%E7%90%86%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86spdb-test1html">地理空间数据库原理</a></li>
+<li><a href="#%E7%8E%AF%E5%A2%83%E5%8F%8A%E6%95%B0%E6%8D%AE">环境及数据</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4">实验步骤</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%88%AA%E5%9B%BE">实验截图</a></li>
 </ul>
 </li>
 </ul>
