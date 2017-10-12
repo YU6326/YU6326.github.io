@@ -1,5 +1,4 @@
 # 地球坐标系和地球椭球
-
 ## 定义
 
 **子午圈（经圈）**：过旋转轴的平面（子午面）与椭球面的交线椭圆。
@@ -33,7 +32,7 @@ $$
 
 #### 1. 以大地经度L及归化纬度u为参数
 
-起始子午面参数方程：
+起始子午线参数方程：
 $$
 X_0=a\cos u,\quad Y_0=0,\quad Z_0=b\sin u 
 $$
@@ -109,7 +108,7 @@ $$
 \left\{
     \begin{aligned}
     &X=a\cos\Phi\cos L\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}} \\
-    &X=a\cos\Phi\sin L\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}} \\
+    &Y=a\cos\Phi\sin L\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}} \\
     &Z=a\sin\Phi\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}} 
     \end{aligned}
 \right.
@@ -151,13 +150,13 @@ $$ a(t)=(a^1(t),a^2(t),a^3(t)) $$
     * 定义：对于正则曲线$\Gamma: r=r(t)$,称积分$s(t)=\int_{t_0}^t |r'(\eta)|d\eta$ 为曲线$\Gamma$从点$t_0$到$t$的弧长。
     * 自然参数：以弧长作为曲线的参数，记为s。曲线表示为$r=r(s)$
     * 自然参数的性质：
-        * 切向量单位长度$|\dot{r}(s)|=|\frac{dr(s)}{ds}|=1$
-        * $\dot{r}(s)\perp \ddot{r}(s)$
+        * 切向量具有单位长度$|\dot{r}(s)|=|\frac{dr(s)}{ds}|=1$，即单位速率曲线。
+        * $r(s)\perp \dot{r}(s),\dot{r}(s)\perp \ddot{r}(s)$
 4. 曲率
-    * 曲率： $k(s)=|\ddot{r}(s)| \quad k(s)=\lim\limits_{\Delta s\to 0}|\frac{\Delta\phi}{\Delta s}|$
-    * 切向量：$T(s)=\dot{r}(s)$
-    * 主法向量：$N(s)=\frac{\ddot{r}(s)}{k(s)}$
-    * 副法向量：$B(s)=T(s)\times N(s)$
+    * 曲率(curvature)： $\kappa (s)=|\ddot{r}(s)| \quad k(s)=\lim\limits_{\Delta s\to 0}|\frac{\Delta\phi}{\Delta s}|$
+    * 单位切向量(unit tangent vector)：$T(s)=\dot{r}(s),|T|=1$ 
+    * 主法向量(principal normal vector)：$N(s)=\frac{\ddot{r}(s)}{k(s)},|N|=1$
+    * 副法向量(binormal)：$B(s)=T(s)\times N(s),|B|=1$
     * 挠率：$\tau(s)=\dot{B}(s)\cdotp N(s)$
     * Frenet标架：$\{r(s):T(s),N(s),B(s)\}$
     * 曲率刻画了曲线的弯曲程度，刻画了曲线偏离切线的程度。
