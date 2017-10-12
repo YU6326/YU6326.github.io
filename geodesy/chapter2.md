@@ -1,5 +1,7 @@
 # 地球坐标系和地球椭球
+
 ## 定义
+
 **子午圈（经圈）**：过旋转轴的平面（子午面）与椭球面的交线椭圆。
 **平行圈（纬圈）**：正交于旋转轴的平面与椭球面的交线圆。
 **赤道圈**：最大的平行圈，其所在的平面（赤道面）过椭圆中心。
@@ -11,7 +13,9 @@
 **球心纬度Φ（地心纬度）**：该点与椭球球心的连线与赤道面的夹角
 
 ## 旋转椭球面数学表达式
-###直角坐标方程
+
+### 直角坐标方程
+
 $$ \frac{X^2}{a^2}+\frac{Y^2}{a^2}+\frac{Z^2}{b^2}=1 $$
 (由两个独立参数唯一确定)
 离心率(第一偏心率）和扁率：
@@ -22,13 +26,18 @@ $$ \frac{X^2}{a^2}+\frac{Z^2}{b^2}=1,\quad Y=0 $$
 $$ 
 \frac{X^2}{a^2}+\frac{Y^2}{a^2}+\frac{Z^2}{b^2}=1,\quad \frac{Y}{X}=\tan L
 $$
+
 ### 参数方程
-####1. 以大地经度L及归化纬度u为参数
+
+#### 1. 以大地经度L及归化纬度u为参数
+
 ![picture1](../images/归化纬度.jpg)
 起始子午面参数方程：
 $$
-X_0=a\cos u,\quad Y_0=0,\quad Z_0=b\sin u \qquad (A)
+X_0=a\cos u,\quad Y_0=0,\quad Z_0=b\sin u 
 $$
+<p align="right">(A)</p>
+
 绕Z轴旋转即得参数椭球面参数方程：
 $$ \left\{
 \begin{aligned}
@@ -38,15 +47,21 @@ $$ \left\{
 \end{aligned}
 \right.
 $$
-####2. 以大地经度L及大地纬度B为参数
+
+#### 2. 以大地经度L及大地纬度B为参数
+
 起始子午线方程：
-$$ \frac{X^2}{a^2}+\frac{Z^2}{b^2}=1 \qquad (1)$$
+$$ \frac{X^2}{a^2}+\frac{Z^2}{b^2}=1 $$
+<p align="right">(1) </p>
+
 在M点处的法向量：
 $$ (\frac{2X}{a^2},\frac{2Z}{b^2})$$
 根据B的定义有：
 $$\tan B=\frac{2Z}{b^2}/\frac{2X}{a^2} $$
 即：
-$$Z=X(1-e^2)\tan B \qquad (2)$$
+$$Z=X(1-e^2)\tan B $$
+<p align="right">(2)</p>
+
 联立（1）（2）有：
 $$
 \left\{
@@ -54,8 +69,10 @@ $$
     &X=\frac{a\cos B}{\sqrt{1-e^2\sin^2 B}} \\
     &Z=\frac{a(1-e^2)\sin B}{\sqrt{1-e^2\sin^2 B}}
     \end{aligned}
-\right. \qquad (B)
+\right.
 $$
+<p align="right">(B)</p>
+
 令$W=\sqrt{1-e^2\sin^2 B},\quad N=\frac{a}{W} $
 绕Z轴旋转有：
 $$
@@ -63,11 +80,14 @@ $$
     \begin{aligned}
     &X=N\cos B\cos L \\
     &Y=N\cos B\sin L \\
-    &Z=N(1-e^2)\sin B 
-    \end{aligned} \qquad (3)
+    &Z=N(1-e^2)\sin B
+    \end{aligned}
 \right.
 $$
-####3. 以大地经度及球心纬度为参数
+<p align="right">(3)</p>
+
+#### 3. 以大地经度L及球心纬度Φ为参数
+
 起始子午线方程：
 $$ \frac{X^2}{a^2}+\frac{Z^2}{b^2}=1 $$
 椭圆的圆心极坐标方程：
@@ -79,8 +99,10 @@ $$
 得
 $$
 X=a\cos\Phi\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}},\quad
-Z=a\sin\Phi\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}} \qquad(C)
+Z=a\sin\Phi\sqrt{\frac{1-e^2}{1-e^2\cos^2 \Phi}}
 $$
+<p align="right">(C)</p>
+
 绕Z轴旋转有：
 $$
 \left\{
@@ -98,7 +120,9 @@ $$
    \tan \Phi &=(1-e^2)\tan B
 \end{aligned}
 $$
-###旋转椭球面的几何性质
+
+### 旋转椭球面的几何性质
+
 1. 对称性
 有三个对称面，一个对称中心
 2. 有界性
@@ -109,27 +133,10 @@ $$
 椭圆$ \frac{X^2}{a^2}+\frac{Y^2}{a^2}+\frac{Z^2}{b^2}=1 $的法向量：
 $$ (\frac{2X}{a^2},\frac{2Y}{a^2},\frac{2Z}{b^2})$$
 将（3）式带入并单位化得：
-$$ \vec{n}=(\cos B\cos L,\cos B\sin L,\sin B)$$
+$$ \vec{n}=(\cos B\cos L,\cos B\sin L,\sin B) $$
 4. 不可展性
 旋转椭球面为不可展曲面
-##法截线的曲率及曲率半径
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## 法截线的曲率及曲率半径
 
 
