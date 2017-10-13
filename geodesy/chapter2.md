@@ -28,7 +28,7 @@ $$
 
 ### 参数方程
 
-![picture1](../images/归化纬度.jpg)
+![picture1](https://github.com/YU6326/YU6326.github.io/raw/master/images/归化纬度.jpg)
 
 #### 1. 以大地经度L及归化纬度u为参数
 
@@ -163,14 +163,14 @@ $$ a(t)=(a^1(t),a^2(t),a^3(t)) $$
     * 挠率刻画了曲线偏离密切面的程度，是曲线非平面化的量
         * 若曲线在T正向的一方，且在密切面上面，即也在B正向的这一面，这时挠率$\tau$取正。
         * 若曲线在正向的一方，且在密切面的下面，挠率$\tau$取负。
-    ![切面](../images/切面.png)
+    ![切面](https://github.com/YU6326/YU6326.github.io/raw/master/images/切面.PNG)
     * 定义：过空间曲线上P点的切线和P点邻近一点Q可作一平面σ，当Q点沿曲线趋于P时，平面σ的极限位置π称为曲线在P点的密切平面
     * 定义：过曲线上一点P的主法线的正侧取线段PC，使PC的长为1/k。以C为圆心以1/k为半径在密切平面上确定一个圆，这个圆称为曲线在P点的密切圆或曲率圆，圆的中心叫曲率中心，圆的半径叫曲率半径。
     在点P处的曲率圆与曲线有下列密切关系：
         1. 有公切线
         2. 凹向一致
         3. 曲率相同
-    ![密切平面](../images/密切平面.png)
+    ![密切平面](https://github.com/YU6326/YU6326.github.io/raw/master/images/密切平面.PNG)
     * Frenet公式，其系数阵为反对称方阵
     $$
     \begin{pmatrix}
