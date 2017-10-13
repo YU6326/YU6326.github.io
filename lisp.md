@@ -44,21 +44,17 @@
 （捕捉两个已知点，输入与第一个点的距离）
 
 ```lisp
-  (defun c:dist_intersect(/ b a c)
+  (defun c:insert_point ()
     (setq osmode (getvar "osmode"))
     (setvar "osmode" 16393) ;;;只捕捉端点和节点
     (setq pt1 (getpoint "输入第一个点"))
     (setq pt2 (getpoint "输入第二个点" pt1))
     (setvar "osmode" 0)
-    (setq b (getdist "输入与第一个点的距离" pt1))
-    (setq a (getdist "输入与第二个点的距离" pt2))
-    (setq c (distance pt1 pt2))
-    (setq L (/ (+ (* b b) (* c c) (* a (- 0 a))) (* 2 c)))
-    (setq h (sqrt (- (* b b) (* L L))))
-    (setq x0 (car pt1) y0 (cadr pt1));;;运用转轴公式
-    (setq theta (angle pt1 pt2))
-    (setq x (+ (* (cos theta) L) (* (sin theta) (- 0 h)) x0))
-    (setq y (+ (* (sin theta) L) (* (cos theta) h) y0)) 
+    (setq dist (getdist "输入与第一个点的距离,同向为正，反向为负" pt1))
+    (setq D (distance pt1 pt2))
+    (setq lambda1 (/ dist (- D dist))) ;;;lambda为AP：PB的比值，方便用定比分点公式
+    (setq x (/ (+ (car pt1) (* lambda1 (car pt2))) (1+ lambda1)))
+    (setq y (/ (+ (cadr pt1) (* lambda1 (cadr pt2))) (1+ lambda1)))
     (command "point" (list x y))
     (setvar "osmode" osmode)
   )
