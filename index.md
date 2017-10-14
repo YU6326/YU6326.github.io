@@ -2,9 +2,10 @@
 
 记录有关Geographic Information System的学习笔记
 
-所有内容禁止转载，仅供个人学习使用。
+商业转载请联系作者获得授权,非商业转载请注明出处。
+[YU6326.github.io](https://YU6326.github.io)
 
-有事请联系email: yuzhouwei6326@outlook.com
+email: yuzhouwei6326@outlook.com
 
 ## 地理空间数据库原理
 
