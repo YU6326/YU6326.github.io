@@ -1,4 +1,4 @@
-## 程序源代码
+## 测量小程序程序源代码
 
 ### 1. 坐标展点
 读取坐标文本文件，标出点位与点号，高程（属性块）
@@ -46,7 +46,7 @@
 ```lisp
   (defun c:insert_point ()
     (setq osmode (getvar "osmode"))
-    (setvar "osmode" 16393) ;;;只捕捉端点和节点
+    (setvar "osmode" 9) ;;;只捕捉端点和节点
     (setq pt1 (getpoint "输入第一个点"))
     (setq pt2 (getpoint "输入第二个点" pt1))
     (setvar "osmode" 0)
@@ -70,9 +70,9 @@
     (setq pt1 (getpoint "输入第一个点"))
     (setq pt2 (getpoint "输入第二个点" pt1))
     (setvar "osmode" 0)
-    (setq L (getdist "输入与第一个点的距离,同向为正，反向为负" pt1))
+    (setq L (getdist "输入与第一个点沿线的距离,同向为正，反向为负" pt1))
     (setq h (getdist "输入到连线的垂距，逆时针为正，顺时针为负"))
-    (setq x0 (car pt1) y0 (cadr pt1));;;运用转轴公式
+    (setq x0 (car pt1) y0 (cadr pt1));;;运用直角坐标变换公式
     (setq theta (angle pt1 pt2))
     (setq x (+ (* (cos theta) L) (* (sin theta) (- 0 h)) x0))
     (setq y (+ (* (sin theta) L) (* (cos theta) h) y0))  
@@ -97,7 +97,7 @@
     (setq c (distance pt1 pt2))
     (setq L (/ (+ (* b b) (* c c) (* a (- 0 a))) (* 2 c)))
     (setq h (sqrt (- (* b b) (* L L))))
-    (setq x0 (car pt1) y0 (cadr pt1));;;运用转轴公式
+    (setq x0 (car pt1) y0 (cadr pt1));;;运用直角坐标变换公式
     (setq theta (angle pt1 pt2))
     (setq x (+ (* (cos theta) L) (* (sin theta) (- 0 h)) x0))
     (setq y (+ (* (sin theta) L) (* (cos theta) h) y0)) 

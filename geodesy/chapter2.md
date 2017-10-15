@@ -142,6 +142,11 @@ $$ \vec{n}=(\cos B\cos L,\cos B\sin L,\sin B) $$
 1. 将曲线看做动点的运动轨迹。三维空间上的曲线是连续映射$a:\mathbf{I\to R^3}$,对于$t\in \mathbf{I}$,我们用
 $$ a(t)=(a^1(t),a^2(t),a^3(t)) $$
 作为$a$的参数化法（parametrization)。
+
+直线的参数方程：$\mathbf p$,$\mathbf q$为直线上的两点，
+$$a(t)=\mathbf p + t(\mathbf q -\mathbf p)$$
+方向向量$\mathbf q -\mathbf p$可是该时刻的速度向量，记为$\mathbf v$。
+
 2. 正则曲线
     * 如果曲线的参数表示式中的函数一阶连续可微函数，这称其为光滑曲线。
     * 对于光滑曲线$r=r(t)$, 假设对于曲线$r=r(t)$上$t=t_0$有$r'(t_0)\not =0$,则称这一点为曲线上的正常点。
@@ -158,6 +163,9 @@ $$ a(t)=(a^1(t),a^2(t),a^3(t)) $$
     * 主法向量(principal normal vector)：$N(s)=\frac{\ddot{r}(s)}{k(s)},|N|=1$
     * 副法向量(binormal)：$B(s)=T(s)\times N(s),|B|=1$
     * 挠率：$\tau(s)=\dot{B}(s)\cdotp N(s)$
+    * **定理** 设β(s)是具有单位速度的曲线，则
+        1. $\kappa =0$ 当且仅当β(s)是直线。
+        2. $\kappa >0,\tau =0$当且仅当β(s)是平面曲线。
     * Frenet标架：$\{r(s):T(s),N(s),B(s)\}$
     * 曲率刻画了曲线的弯曲程度，刻画了曲线偏离切线的程度。
     * 挠率刻画了曲线偏离密切面的程度，是曲线非平面化的量
@@ -182,13 +190,14 @@ $$ a(t)=(a^1(t),a^2(t),a^3(t)) $$
     \begin{pmatrix}
     0 & k(s) & 0 \\
     -k(s) & 0 & \tau (s)\\
-    0 & \tau(s) & 0
+    0 & -\tau(s) & 0
     \end{pmatrix}
     \begin{pmatrix}
     T(s) \\ N(s) \\ B(s)
     \end{pmatrix}
     $$
         * 性质：自然参数条件下，$k(s)$与$\tau (s)$唯一决定空间曲线
+    * 达布向量（Darboux vector): $\omega =\tau T+\kappa B$
 5. 一般参数曲线的曲率、挠率的计算
     * 空间曲线：$r=r(t)$
         * 曲率：$$k=\frac{|r'(t)\times r''(t)|}{|r'(t)|^3}$$
