@@ -96,10 +96,10 @@ Redim preserve array1(5,10)
 
 ## 书写规范
 
-1. VBA不区分标识符的字母大小写，一律认为是小写字母； 
-2. 最好以行只写一条语句。一行可以书写多条语句，各语句之间以冒号 : 分开；
-3. 一条语句可以多行书写，以空格加下划线 _ 来标识下行为续行；
-4. 标识符最好能简洁明了，不造成歧义。
+1. VBA不区分标识符的字母大小写，一律认为是小写字母 
+2. 最好以行只写一条语句。一行可以书写多条语句，各语句之间以冒号 : 分开
+3. 一条语句可以多行书写，以空格加下划线 _ 来标识下行为续行
+4. 标识符最好能简洁明了，不造成歧义
 
 ## 语句
 
@@ -108,7 +108,9 @@ Redim preserve array1(5,10)
 1. If…Then…Else语句 
 ```vb
 If condition Then [statements] [Else elsestatements] 
-'condition 是个判断条件，当condition为真True，就执行Then后面的statements那些语句，如果为假False,执行elsestatements语句 
+'condition 是个判断条件，
+'当condition为真True，就执行Then后面的statements那些语句
+'如果为假False,执行elsestatements语句 
 '如：
 If A>B And C<D Then A=B+2 Else A=C+2
 If x>250 Then x=x-100 
@@ -117,7 +119,7 @@ If condition Then
 [statements] 
 [ElseIf condition-n Then 
 [elseifstatements]
-...
+'...
 [Else 
 [elsestatements]] 
 End If 
@@ -135,9 +137,9 @@ End If
 如：Pid的取值来决定执行不同的语句 
 ```vb
 Select Case Pid
-    Case “A101” 
+    Case "A101"
         Price = 200   '当Pid的实际值是“A101”，就执行Price=200.后面的以此类推 
-    Case “A102” 
+    Case "A102" 
         Price = 300
     Case Else 
         Price = 900 
@@ -167,19 +169,20 @@ Next Words
 
 主要功能是对一个数组或集合对象进行，让所有元素重复执行一次语句,其作用就是遍历一遍数组或集合对象中的所有元素
  ```vb
-For Each element In group   'group 必要参数。对象集合或数组的名称（用户定义类型的数组除外）。 
-Statements 
+For Each element In group   
+'group 必要参数。对象集合或数组的名称（用户定义类型的数组除外）。 
+[Statements] 
 [Exit for] 
-Statements 
+[Statements]
 Next [element] 
 '如1： 
-For Each rang2 In range1 
+For Each range2 In range1 
     With range2.interior 
         .colorindex=6 
         .pattern=xlSolid 
     End with
 Next
-'这上面一例中用到了 With…End With 语句，目的是省去对象多次调用，加快速度；语法为： 
+'With…End With 语句，目的是省去对象多次调用，加快速度；语法为： 
 With object 
     [statements] 
 End With
@@ -188,7 +191,8 @@ End With
 
 在条件为true时，重复执行区块命令
  ```vb
-Do {while |until} condition ' while 为当型循环，until为直到型循环，顾名思义，不多说啦 
+Do {while |until} condition 
+' while 为当型循环，until为直到型循环，顾名思义，不多说啦 
     [Statements] 
     Exit do 
     [Statements] 
@@ -198,13 +202,13 @@ Do   ' 先do 再判断，即不论如何先干一次再说
     [Statements] 
     Exit do 
     [Statements]
-Loop {while |until} condition 
+Loop {while | until} condition 
 ```
 4）while…wend语句
 
 只要条件为TRUE，循环就执行 如下例： 
 ```vb
-while condition 'while I<50 
+While condition 'while I<50 
 [statements] 'I=I+1
 Wend
 ```
@@ -240,7 +244,7 @@ Fix(number) '都返回参数的整数部分，区别：Int 将 -8.4 转换成 -9
 Sgn(number) '返回一个 Variant (Integer)，指出参数的正负号 
 Sqr(number) '返回一个 Double，指定参数的平方根 
 VarType(varname) '返回一个 Integer，指出变量的子类型 
-Rnd（x）'返回0-1之间的单精度数据，x为随机种子 
+Rnd(x)'返回0-1之间的单精度数据，x为随机种子 
 ``` 
 三．字符串函数 
 ```vb
