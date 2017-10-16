@@ -112,26 +112,27 @@
   )
 ```
 ### 5. 求某图层下lwpolyline的面积
-```
-(defun c:areaPl()
-  (setq lyr (getstring "输入图层名:\n"))
-  (setq ss (ssget "x" (list (cons 8 lyr) (cons 0 "lw*"))))
-  (setq len (sslength ss))
-  (setq i 0)
-  (if ss
-    (progn
-  (command "area" "a"　"o")
-  (while (< i len)
-   (setq ent (ssname ss i))
-   (command  ent)
-   (setq i (1+ i)) 
-)
-  ))
-  (command "" "")
-  (setq s (getvar "area"))
-  (princ "面积:")
-  (princ s)
-  (princ)
+```lisp
+  (defun c:areaPl()
+    (setq lyr (getstring "输入图层名:\n"))
+    (setq ss (ssget "x" (list (cons 8 lyr) (cons 0 "lw*"))))
+    (setq len (sslength ss))
+    (setq i 0)
+    (if ss
+      (progn
+        (command "area" "a"　"o")
+        (while (< i len)
+          (setq ent (ssname ss i))
+          (command  ent)
+          (setq i (1+ i)) 
+        )
+      )
+    )
+    (command "" "")
+    (setq s (getvar "area"))
+    (princ "面积:")
+    (princ s)
+    (princ)
   )
  ```
 
