@@ -20,4 +20,4 @@ email: yuzhouwei6326@outlook.com
 
 ## 测量lisp程序
 
-[lisp小程序](surveyProgram/lisp.md)
+[lisp小程序](Lisp/lisp1.md)
