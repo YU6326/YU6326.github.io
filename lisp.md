@@ -15,7 +15,7 @@
     (setvar "cmdecho" 0)
     (setq s (read-line f))
     (while (/= s "000")
-      (setq pn (atoi (substr s 17 4)))
+      (setq pn (substr s 17 4))
       (setq x (atof (substr s 37 10)))
       (setq y (atof (substr s 21 10)))
       (setq h (atof (substr s 53 10)) h (rtos h 2 2))
