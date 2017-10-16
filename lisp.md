@@ -12,7 +12,7 @@
     (setvar "attdia" 0)  ;;;设定块的属性由命令行输入
     (setq file (getfiled "选定点位数据文件" "d:/" "txt" 0))
     (setq f (open file "r"))
-    (setq pl nil)
+    (setvar "cmdecho" 0)
     (setq s (read-line f))
     (while (/= s "000")
       (setq pn (atoi (substr s 17 4)))
@@ -22,6 +22,8 @@
       (command "_insert" "block_point" (list x y) 1 1 0 pn h "")
       (setq s (read-line f))
     )
+      (close file)
+      (setvar "cmdecho" 1)
       (setvar "osmode" osmode_old)
   )
   (defun write_block () ;;;创建一个名为block_point的块
@@ -37,6 +39,10 @@
     (ssadd e3 ss)
     (ssadd e4 ss)
     (command "_block" "block_point" '(0 0) ss "") 
+    (entdel e1)
+    (entdel e2)
+    (entdel e3)
+    (entdel e4)
   )
 ```
 ### 2. 坐标解算：内外插点法
