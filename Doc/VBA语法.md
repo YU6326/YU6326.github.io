@@ -110,7 +110,7 @@ Redim preserve array1(5,10)
 ### 判断语句
 
 1. If…Then…Else语句 
-    ```vba
+    ```vb
     If condition Then [statements] [Else elsestatements] 
     'condition 是个判断条件，
     '当condition为真True，就执行Then后面的statements那些语句
@@ -233,7 +233,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
 ## 常用函数
 
 1. 测试函数
-    ```vba 
+    ```vb
     IsNumeric(x)        '是否为数字, 返回Boolean结果，True or False 
     IsDate(x)          '是否是日期, 返回Boolean结果，True or False 
     IsEmpty(x)      '是否为Empty, 返回Boolean结果，True or False 
@@ -244,7 +244,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```
 2. 数学函数
 
-    ```vba
+    ```vb
     Sin(x)
     Cos(x)
     Tan(x)
@@ -260,7 +260,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     Rnd(x)'返回0-1之间的单精度数据，x为随机种子 
     ``` 
 3. 字符串函数 
-    ```vba
+    ```vb
     Trim(string)     '去掉string左右两端空白 
     Ltrim(string)     '去掉string左端空白 
     Rtrim(string)     '去掉string右端空白 
@@ -276,7 +276,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```  
 4. 转换函数
 
-    ```vba
+    ```vb
     CBool(expression)   '转换为Boolean型 
     CByte(expression)   '转换为Byte型 
     CCur(expression)    '转换为Currency型 
@@ -293,7 +293,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```
 5. 时间函数
 
-    ```vba
+    ```vb
     Now     '返回一个 Variant (Date)，根据计算机系统设置的日期和时间来指定日期和时间。
     Date    '返回包含系统日期的 Variant (Date)。 
     Time     '返回一个指明当前系统时间的 Variant (Date)。 
