@@ -28,7 +28,7 @@ Object| |4
     按优先级顺序排列为：^, -, *, /, \, Mod, +, -
 
     True=-1, False=0
-    
+
 2. 字符串连接符
 
     &，+
@@ -77,10 +77,10 @@ Dim 数组名([lower to ]upper [, [lower to ]upper, ….]) as type Lower缺省�
 除了以上固定数组外，VBA还有一种功能强大的动态数组，定义时无大小维数声明；在程序中再利用Redim语句来重新改变数组大小，原来数组内容可以通过加preserve关键字来保留。如下例：
 
 ```vb
-    Dim array1() as double
-    Redim array1(5)
-    array1(3)=250
-    Redim preserve array1(5,10) 
+Dim array1() as double
+Redim array1(5)
+array1(3)=250
+Redim preserve array1(5,10) 
 ```
 
 ## 注释和赋值语句
@@ -110,45 +110,45 @@ Dim 数组名([lower to ]upper [, [lower to ]upper, ….]) as type Lower缺省�
 ### 判断语句
 
 1. If…Then…Else语句 
-    ```vb
-        If condition Then [statements] [Else elsestatements] 
-        'condition 是个判断条件，
-        '当condition为真True，就执行Then后面的statements那些语句
-        '如果为假False,执行elsestatements语句 
-        '如：
-        If A>B And C<D Then A=B+2 Else A=C+2
-        If x>250 Then x=x-100 
-        '或者，可以使用块形式的语法，即If…Then…Else语句 可以嵌套： 
-        If condition Then 
-        [statements] 
-        [ElseIf condition-n Then 
-        [elseifstatements]
-        '...
-        [Else 
-        [elsestatements]] 
-        End If 
-        '如:
-        If Number < 10 Then 
-        Digits = 1 
-        ElseIf Number < 100 Then
-        Digits = 2 
-        Else 
-        Digits = 3 
-        End If 
+    ```vba
+    If condition Then [statements] [Else elsestatements] 
+    'condition 是个判断条件，
+    '当condition为真True，就执行Then后面的statements那些语句
+    '如果为假False,执行elsestatements语句 
+    '如：
+    If A>B And C<D Then A=B+2 Else A=C+2
+    If x>250 Then x=x-100 
+    '或者，可以使用块形式的语法，即If…Then…Else语句 可以嵌套： 
+    If condition Then 
+    [statements] 
+    [ElseIf condition-n Then 
+    [elseifstatements]
+    '...
+    [Else 
+    [elsestatements]] 
+    End If 
+    '如:
+    If Number < 10 Then 
+    Digits = 1 
+    ElseIf Number < 100 Then
+    Digits = 2 
+    Else 
+    Digits = 3 
+    End If 
     ```
 2. Select Case…Case…End Case语句
 
     如：Pid的取值来决定执行不同的语句
 
     ```vb
-        Select Case Pid
-            Case "A101"
-                Price = 200   '当Pid的实际值是“A101”，就执行Price=200.后面的以此类推 
-            Case "A102" 
-                Price = 300
-            Case Else 
-                Price = 900 
-        End Select
+    Select Case Pid
+        Case "A101"
+            Price = 200   '当Pid的实际值是“A101”，就执行Price=200.后面的以此类推 
+        Case "A102" 
+            Price = 300
+        Case Else 
+            Price = 900 
+    End Select
     ```
 
 ### 循环语句
@@ -158,18 +158,18 @@ Dim 数组名([lower to ]upper [, [lower to ]upper, ….]) as type Lower缺省�
     以指定次数来重复执行一组语句
 
     ```vb
-        For counter = start To end [Step step]    ' step 缺省值为1 
-        [statements] 
-        [Exit For] 
-        [statements] 
-        Next [counter] 
-        '如：for语句也可以嵌套，如下，两重for循环
-        For Words = 10 To 1 Step -1  ' 建立 10 次循环
-            For Chars = 0 To 9         ' 建立 10 次循环 
-                MyString = MyString & Chars     ' 将数字添加到字符串中     
-            Next Chars          ' Increment counter     
-            MyString = MyString & " "      ' 添加一个空格
-        Next Words
+    For counter = start To end [Step step]    ' step 缺省值为1 
+    [statements] 
+    [Exit For] 
+    [statements] 
+    Next [counter] 
+    '如：for语句也可以嵌套，如下，两重for循环
+    For Words = 10 To 1 Step -1  ' 建立 10 次循环
+        For Chars = 0 To 9         ' 建立 10 次循环 
+            MyString = MyString & Chars     ' 将数字添加到字符串中     
+        Next Chars          ' Increment counter     
+        MyString = MyString & " "      ' 添加一个空格
+    Next Words
     ```  
 2. For Each…Next语句
 
@@ -199,27 +199,27 @@ Dim 数组名([lower to ]upper [, [lower to ]upper, ….]) as type Lower缺省�
     在条件为true时，重复执行区块命令
 
     ```vb
-        Do {while |until} condition 
-        ' while 为当型循环，until为直到型循环，顾名思义，不多说啦 
-        [Statements] 
-        Exit do 
-        [Statements] 
-        Loop 
-        '或者使用下面语法 
-        Do   ' 先do 再判断，即不论如何先干一次再说 
-        [Statements] 
-        Exit do 
-        [Statements]
-        Loop {while | until} condition 
+    Do {while |until} condition 
+    ' while 为当型循环，until为直到型循环，顾名思义，不多说啦 
+    [Statements] 
+    Exit do 
+    [Statements] 
+    Loop 
+    '或者使用下面语法 
+    Do   ' 先do 再判断，即不论如何先干一次再说 
+    [Statements] 
+    Exit do 
+    [Statements]
+    Loop {while | until} condition 
     ```
 4. while…wend语句
 
     只要条件为TRUE，循环就执行 如下例：
 
     ```vb
-        While condition 'while I<50 
-        [statements] 'I=I+1
-        Wend
+    While condition 'while I<50 
+    [statements] 'I=I+1
+    Wend
     ```
    
 ## 错误处理
@@ -233,7 +233,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
 ## 常用函数
 
 1. 测试函数
-    ```vb 
+    ```vba 
     IsNumeric(x)        '是否为数字, 返回Boolean结果，True or False 
     IsDate(x)          '是否是日期, 返回Boolean结果，True or False 
     IsEmpty(x)      '是否为Empty, 返回Boolean结果，True or False 
@@ -244,7 +244,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```
 2. 数学函数
 
-    ```vb
+    ```vba
     Sin(x)
     Cos(x)
     Tan(x)
@@ -260,7 +260,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     Rnd(x)'返回0-1之间的单精度数据，x为随机种子 
     ``` 
 3. 字符串函数 
-    ```vb
+    ```vba
     Trim(string)     '去掉string左右两端空白 
     Ltrim(string)     '去掉string左端空白 
     Rtrim(string)     '去掉string右端空白 
@@ -276,7 +276,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```  
 4. 转换函数
 
-    ```vb
+    ```vba
     CBool(expression)   '转换为Boolean型 
     CByte(expression)   '转换为Byte型 
     CCur(expression)    '转换为Currency型 
@@ -293,7 +293,7 @@ On Error Goto 0       '当错误发生时，会立刻停止过程中任何错误
     ```
 5. 时间函数
 
-    ```vb
+    ```vba
     Now     '返回一个 Variant (Date)，根据计算机系统设置的日期和时间来指定日期和时间。
     Date    '返回包含系统日期的 Variant (Date)。 
     Time     '返回一个指明当前系统时间的 Variant (Date)。 
