@@ -32,6 +32,7 @@
 
 ### T-Z
 
+* triangulation n.三角测量 
 * topography [tə'pɒgrəfɪ]n.地形学
 * vegetation [vedʒɪ'teɪʃ(ə)n]n. 植被；植物，草木(adj:vegetative)
 
@@ -69,6 +70,7 @@
 
 * maintenance [ˈmeɪntənəns] n. 维护，维修；保持；生活费用
 * metrical adj.测量的
+* notable['nəʊtəb(ə)l]adj. 值得注意的，显著的；著名的n. 名人，显要人物
 * optical adj.光学的，视觉的
 * portion n.一部分
 * pertain [pə'teɪn]vi. 属于；关于；适合

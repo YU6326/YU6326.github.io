@@ -21,9 +21,10 @@ email: yuzhouwei6326@outlook.com
 
 * [地球坐标系和地球椭球](geodesy/chapter2.html)
 
-## 射影测量
+## 摄影测量
 
-* [射影测量专业词汇](photogrammetry/vocabulary.md)
+* [射影几何基础](photogrammetry/projectiveGeo.html)
+* [摄影测量专业词汇](photogrammetry/vocabulary.md)
 
 ## 测量lisp程序
 
