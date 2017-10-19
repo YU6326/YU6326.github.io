@@ -2,6 +2,8 @@
 
 图片链接：https://github.com/YU6326/YU6326.github.io/raw/master/images/ + 图片名
 
+文件名和后缀的大小写都要注意
+
 主页和纯文本用的是hacker主题
 其余的都是markdown preview enhanced中的主题。
 

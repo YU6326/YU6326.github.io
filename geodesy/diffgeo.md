@@ -27,7 +27,7 @@
         * $r(s)\perp \dot{r}(s),\dot{r}(s)\perp \ddot{r}(s)$
 4. 曲率、挠率
     * 单位切向量(unit tangent vector)：$T(s)=\dot{r}(s),|T|=1$
-    ![p7](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture7.png)
+    ![p7](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture7.PNG)
     * **定理** 设$\Delta \theta$表示向量$\alpha(s+\Delta s)$与$\alpha(s)$之间的夹角，则
     $$
     |\dot T(s)|=\lim_{\Delta s\to 0}|\frac{\Delta \theta}{\Delta s}|
@@ -145,7 +145,7 @@
     r=r(u,v)=(x(u,v),y(u,v),z(u,v))
     $$
     我们首先要求函数$x(u,v),y(u,v),z(u,v)$都是三次以上连续可微的。变量$u,v$称为该曲面片的参数。
-    ![p11](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture11.png)
+    ![p11](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture11.PNG)
     在曲面S上取一定点$P_0=r(u_0,V_0)$,让$V$变化，而$u=u_0$,则动点描出一条落在曲面S上的曲线，这条曲线称为过点$P_0$的v-曲线，它的方程是
     $$u=u_0$$
     或者
