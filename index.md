@@ -19,6 +19,7 @@ email: yuzhouwei6326@outlook.com
 
 ## 现代大地控制测量
 
+* [微分几何基础](geodesy/diffgeo.html)
 * [地球坐标系和地球椭球](geodesy/chapter2.html)
 
 ## 摄影测量
