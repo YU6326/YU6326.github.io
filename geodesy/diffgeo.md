@@ -1,6 +1,6 @@
-## 补充：微分几何知识
+# 补充：微分几何知识
 
-### 曲线论
+## 曲线论
 
 1. 参数方程
 
@@ -128,7 +128,7 @@
     * 曲线的弧长、曲率、挠率这三个量是由曲线本身的形状决定的，与它的参数表示和坐标系的选取无关。
     * **定理** 设$r=r_1(s),r=r_2(s)$是$E^3$中两条以弧长s为参数的正则曲线，如果他们的曲率出处不为0，并且$\kappa_1(s)=\kappa_2(s),\tau_1(s)=\tau_2(s)$,则必存在$E^3$的一个刚体运动$\sigma$,它把曲线$r=r_2(s)$变为曲线$r=r_1(s)$。
 
-### 曲面论
+## 曲面论
 
 1. 参数曲面片
     所谓**参数曲面片**是指从$E^2$的一个区域$D$到空间$E^3$中的一个连续映射。若在$E^2,E^3$中分别建立笛卡尔坐标系，用$(u,v)$记$E^2$中点的坐标，用$(x,y,z)$记$E^3$中的点的坐标，则一个参数曲面排列的方程可以表示为：
@@ -169,13 +169,110 @@
     $$
     X(t)=r(u,v)+tn(u,v)
     $$
-    曲面上的每一点，由其参数方程定义了一个标架${r;r_u,r_v,n} $,称为曲面上的自然标架。
-6. 曲面的第一基本形式
-    设有正则参数曲面片$S:r=r(u,v)$,曲面S在每一点的切空间是有切向量$r_u(u,v),r_v(u,v)$张成的二维向量空间，它是$R^3$的子空间，因此S的切向量作为$R^3$中的向量，可以求它们的长度及夹角。前面已经说过，曲面S在任意一点$r(u,v)$的切向量是
-    $$
-    dr(u,v)=r_u(u,v)du+r_v(u,v)dv
-    $$
-    <p align="right">(1)</p>
+    曲面上的每一点，由其参数方程定义了一个标架$\{r;r_u,r_v,n\} $,称为曲面上的自然标架。
 
-    其中$(du,dv)$是切向量$dr(u,v)$在自然基底${r_u,r_v}$下的分量。
-    但是一般说来，${r_u,r_v}$不是单位正交基底，如果我们知道基底的度量系数，则表示成（1）式的切向量的内积就能够用他们在基底${r_u,r_v}$下的分量$du,dv$来表达了。命
+### 曲面的第一基本形式
+
+设有正则参数曲面片$S:r=r(u,v)$,曲面S在每一点的切空间是有切向量$r_u(u,v),r_v(u,v)$张成的二维向量空间，它是$R^3$的子空间，因此S的切向量作为$R^3$中的向量，可以求它们的长度及夹角。前面已经说过，曲面S在任意一点$r(u,v)$的切向量是
+$$
+dr(u,v)=r_u(u,v)du+r_v(u,v)dv
+$$
+<p align="right">(1)</p>
+
+其中$(du,dv)$是切向量$dr(u,v)$在自然基底${r_u,r_v}$下的分量。
+但是一般说来，${r_u,r_v}$不是单位正交基底，如果我们知道基底的度量系数，则表示成（1）式的切向量的内积就能够用他们在基底${r_u,r_v}$下的分量$du,dv$来表达了。命
+$$
+\begin{aligned}
+E(u,v)=&r_u\cdotp r_u \\
+F(u,v)=&r_u\cdotp r_v \\
+G(u,v)=&r_v\cdotp r_v 
+\end{aligned}
+$$
+他们就是基底${r_u,r_v}$的度量系数，称为曲面S的**第一类基本量**
+通常记作：
+$$
+\begin{pmatrix}
+E & F\\
+F & G
+\end{pmatrix}
+$$
+显然这是一个正定矩阵
+$$
+\begin{aligned}
+I=&Edu^2+2Fdudv+Gdv^2\\
+=&(du,dv)
+\begin{pmatrix}
+E & F\\
+F & G
+\end{pmatrix}
+\begin{pmatrix}
+du \\ dv
+\end{pmatrix}
+\end{aligned}
+$$
+二次微分式$I$在容许参数变换下是不变的，我们称$I$为曲面的**第一基本形式**。
+$I$的几何意义
+$$I=dr\cdotp dr $$
+此外若命
+$$delta r=r_u\delta u+r_v\delta v $$
+这切向量的内积是
+$$
+dr\cdotp \delta r=(du,dv)
+\begin{pmatrix}
+E & F\\
+F & G
+\end{pmatrix}
+\begin{pmatrix}
+\delta u \\ \delta v
+\end{pmatrix}
+$$
+
+<p align="right">(2)</p>
+
+因此
+$$
+\begin{aligned}
+|dr|=&\sqrt{Edu^2+2Fdudv+Gdv^2}\\
+\cos \angle(dr,\delta r)=&\frac{dr\cdotp \delta r}{|dr||\delta r|}
+\end{aligned}
+$$
+<p align="right">(3)</p>
+
+特别的，$dr$与$\delta r$正交$\iff(1)=0$
+
+若在曲面上有一条曲线，它的方程是
+$$u=u(t),\quad v=v(t),\quad a\le t\le b.$$
+由（3）知，它的弧长是
+$$
+\begin{aligned}
+L=&\int_a^b|r'(t)|dt\\
+=&\int_a^b[E(u(t),v(t))(\frac{du}{dt})^2+2F(u(t),v(t))\frac{du}{dt}\frac{dv}{dt}+G(u(t),v(t))(\frac{dv}{dt})^2]^{1/2}dt
+\end{aligned}
+$$
+
+最后我们来讨论曲面上一个区域的面积计算。
+![p18](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture18.PNG)
+设S的方程是$r=r(u,v),(u,v)\in D\subset E^2$,考虑曲面上由参数曲线$u=u_0,u=u_0+\Delta u,v=v_0,v=v_0+\Delta v$所围成的一小块，它的面积与切平面上由$\Delta u\cdotp r_u,\Delta v\cdotp r_v$所张成的平行是变形的面积在略去更高阶无穷小之后是相同的，而后者的面积是
+$$
+\begin{aligned}
+|(\Delta u\cdotp r_u)\times(\Delta v\cdotp r_v)|=&|r_u\times r_v|\Delta u\Delta v\\
+=&\sqrt{EG-F^2}\Delta u\Delta v
+\end{aligned}
+$$
+命
+$$
+dA=\sqrt{EG-F^2}dudv
+$$
+称为曲面S的面积元素，那么S的面积是
+$$
+A=\iint_D\sqrt{EG-F^2}dudv
+$$
+根据重积分的替换法则以及第一类基本量的变换规律不难知道，A与曲面上参数的容许变换是无关的。
+1. 保长对应和保角对应
+2. 可展曲面
+
+### 曲面的第二基本形式
+
+## 参考资料
+
+1. 微分几何初步 陈维桓
