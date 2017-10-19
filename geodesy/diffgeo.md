@@ -146,7 +146,7 @@
     $$
     我们首先要求函数$x(u,v),y(u,v),z(u,v)$都是三次以上连续可微的。变量$u,v$称为该曲面片的参数。
     ![p11](https://github.com/YU6326/YU6326.github.io/raw/master/images/picture11.PNG)
-    在曲面S上取一定点$P_0=r(u_0,V_0)$,让$V$变化，而$u=u_0$,则动点描出一条落在曲面S上的曲线，这条曲线称为过点$P_0$的v-曲线，它的方程是
+    在曲面S上取一定点$P_0=r(u_0,u_0)$,让$u$变化，而$u=u_0$,则动点描出一条落在曲面S上的曲线，这条曲线称为过点$P_0$的v-曲线，它的方程是
     $$u=u_0$$
     或者
     $$r=r(u_0,v)$$
@@ -214,7 +214,7 @@ $$
 $I$的几何意义
 $$I=dr\cdotp dr $$
 此外若命
-$$delta r=r_u\delta u+r_v\delta v $$
+$$\delta r=r_u\delta u+r_v\delta v $$
 这切向量的内积是
 $$
 dr\cdotp \delta r=(du,dv)

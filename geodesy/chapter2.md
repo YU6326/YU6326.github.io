@@ -4,8 +4,8 @@
 **子午圈（经圈）**：过旋转轴的平面（子午面）与椭球面的交线椭圆。
 **平行圈（纬圈）**：正交于旋转轴的平面与椭球面的交线圆。
 **赤道圈**：最大的平行圈，其所在的平面（赤道面）过椭圆中心。
-**Frenet(伏雷内)标架**：利用曲线上任一点处的三个单位正交基构成的三维直角坐标系。其中T轴指向曲线的切线方向，n轴指向曲线的主法线方向，b轴指向曲线的副法线方向。
-（主法线n：切向量的导数；副法线b：与切线和主法线垂直且符合右手法则的向量$\vec{b}=\vec{T}\times \vec{n}$。）
+**Frenet(伏雷内)标架**：利用曲线上任一点处的三个单位正交基构成的三维直角坐标系。其中T轴指向曲线的切线方向，N轴指向曲线的主法线方向，B轴指向曲线的副法线方向。
+(注意$\{T,P,R\}$不是右手系，$\{T,P',R\}$才是右手系,按定义来讲不是Frenet标架，但是$\{T,R,P\}$是曲面的自然标架。)
 **大地经度L**：是指通过地面A点和地球椭球体旋转轴的平面与起始大地子午面（本初子午面）间的夹角L。
 **大地纬度B**：椭球面在该点处的法线与赤道面的夹角。
 **归化纬度u**：该点所在的子午面上的椭圆的对应的外接圆的圆心角
@@ -13,6 +13,9 @@
 **法截面**：过椭球面上一点的椭球面法线所在平面。
 **法截线（法截弧）**：法截面同椭球面的交线。
 **卯酉线**：过椭球面上一点M作与该点子午线切线MT相正交的法截面，它与椭球面的交线
+**法曲率**：？
+**大地方位角A**：？ 
+**平均曲率半径（高斯曲率半径）**：一点上所有方向法截线的曲率半径的平均值
 
 ## 旋转椭球面数学表达式
 
@@ -50,6 +53,7 @@ $$ \left\{
 \end{aligned}
 \right.
 $$
+可推得：经线和纬线处处正交。
 
 #### 2. 以大地经度L及大地纬度B为参数
 
@@ -168,8 +172,63 @@ $$\kappa=\frac{|r'(t)\times r''(t)|}{|r'(t)|^3}$$
     通常用M为子午线曲率半径的符号：
     $$M=\frac{1}{\kappa}=\frac{a(1-e^2)}{W^3}$$
     * 卯酉线曲率半径
+    $N=a/W$(推导未知)
+    * 任意方向法截线的曲率半径
+    由微分几何Eular公式有
+    $$k_A=\frac{\cos^2 A}{M}+\frac{\sin^2 A}{N} $$
+    $$R_A=\frac{MN}{N\cos^2 A+M\sin^2 A} $$
+    * 平均曲率半径
+    $$R=\frac{1}{\pi/2-0}\int_0^{\pi/2}R_AdA=\frac{2}{\pi}\int_0^{\pi/2}\frac{MN}{N\cos^2 A+M\sin^2 A}dA $$
+    由积分公式
+    $$\int\frac{dx}{a^2\cos^2 x+b^2\sin^2 x}=\frac{1}{ab}\arctan(\frac{b}{a}\tan x)+C $$
+    可知
+    $$R=\sqrt{MN}=\frac{a\sqrt{1-e^2}}{W^2}$$
+    又知道
+    $$
+    \begin{aligned}
+    W=&\sqrt{1-e^2\sin^2 B} \\
+    N=&\frac{a}{W}\\
+    M=&\frac{a(1-e^2)}{W^3}
+    \end{aligned}
+    $$
+    由于
+    $$W\ge \sqrt{1-e^2}$$
+    当且仅当$B=90^\circ$时取等号
+    所以有$N\ge R\ge M$
+    即任意方向曲率半径大小介于同纬度子午线和卯酉线曲率半径之间。
 
+## 有关弧长、面积的计算
 
+1. 由定义给出：$E=M^2,F=0,G=N^2\cdotp \cos^2 B$
+2. 微小弧段$dS=\sqrt{M^2dB^2+N^2\cos^2 B\cdotp dL^2}$
+3. 子午线弧长
+不妨取其实子午线，其参数方程
+$$
+\left\{
+\begin{aligned}
+X=&a\cos u \\
+Z=&b\sin u
+\end{aligned}\right.
+$$
+其弧长
+$$
+\begin{aligned}
+S_{1\sim2}=&\int \sqrt{a^2\sin^2 u+b^2\cos^2 u}du \text{第一类椭圆积分}\\
+=&\int MdB\\
+=&a(1-e^2)\int_{B_1}^{B_2}(1-e^2\sin^2 B)^{-\frac{3}{2}}dB\text{第三类椭圆积分}
+\end{aligned}
+$$
 
+matlab中的函数
+ellipticPi(n,m) %第三类完全椭圆积分
+ellipticPi(n,phi,m) %第三类不完全椭圆积分
+The incomplete elliptic integral of the third kind is defined as follows:
+$$
+\Pi(n;\varphi|m)=\int_0^\varphi\frac{1}{(1-n\sin^2\theta)\sqrt{1-m\sin^2\theta}}d\theta
+$$
+ellipticPi(n,pi/2,m)=ellipticPi(n,m)
+故
+$$S_{1\sim2}=a(1-e^2)(ellipticPi(e^2,B_2,e^2)-ellipticPi(e^2,B_1,e^2))
+$$
 ## 参考资料
 1. 现代大地控制测量（第二版） 施一民 测绘出版社
