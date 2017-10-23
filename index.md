@@ -28,6 +28,17 @@ email: yuzhouwei6326@outlook.com
 * [射影几何基础](photogrammetry/projectiveGeo.html)
 * [摄影测量专业词汇](photogrammetry/vocabulary.md)
 
-## 测量lisp程序
+## 小程序
+
+### lisp
 
 * [lisp小程序](Lisp/lisp1.md)
+
+### python
+
+开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
+
+某些bug：参数中无法返回，无法传递optional变量
+
+* [pyautocad demo](Doc.caddemo.py)
+* [pyautocad transformation](Doc.transformation.py)

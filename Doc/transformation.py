@@ -1,11 +1,18 @@
 
+# -*- coding: utf-8 -*-
+# 编译器Python3.6 64bit
+# 相关包：pyautocad,comtypes,numpy
+# (因为numpy的数据类型无bug，可能跟comtypes的内部数据类型转换有关)
 from pyautocad import Autocad,APoint,aDouble,aShort,aInt,ACAD
+import numpy as np
 from math import *
-import array
-import comtypes.automation
-acad=Autocad()
 
+acad=Autocad(create_if_not_exists=True)
+
+#对于autocad中的lwpolyline
 def job1():
+    '''绕中心点逆时针旋转45度，绘制的线用红色表示
+    '''
     try:
         acad.doc.SelectionSets.Item('SS1').Delete()
     except Exception:
@@ -15,7 +22,7 @@ def job1():
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(0)
+        entity=selection.Item(np.int(0))
     else:
         print("选择的多义线多于一条")
         return
@@ -26,6 +33,9 @@ def job1():
     acad.doc.Regen(1)
 
 def job2():
+    '''选取最长的对角线，以对角线的某一点为原点，沿该对角线伸长1.5倍
+    绘制的线用蓝色表示
+    '''
     try:
         acad.doc.SelectionSets.Item('SS1').Delete()
     except Exception:
@@ -35,7 +45,7 @@ def job2():
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(0)
+        entity=selection.Item(np.int(0))
     else:
         print("选择的多义线多于一条")
         return
@@ -55,6 +65,8 @@ def job2():
     acad.doc.Regen(1)
 
 def job3():
+    '''以该多边形的外包矩形的左下角为原点，实现沿着x方向的错切变换
+    '''
     try:
         acad.doc.SelectionSets.Item('SS1').Delete()
     except Exception:
@@ -64,20 +76,18 @@ def job3():
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(0)
+        entity=selection.Item(np.int(0))
     else:
         print("选择的多义线多于一条")
         return
     coor=entity.Coordinates
-    # minPnt=APoint(0)
-    # maxPnt=[0]
-    # minPnt1=array.array('Q',[])
-    # maxPnt1=comtypes.automation.VARIANT()
-    # u=entity.GetBoundingBox
-    # minPnt1=()
-    # maxPnt1=None
-    # u=entity.GetBoundingBox
-    # entity.GetBoundingBox(minPnt1,maxPnt1)#bug
+    # minPnt=np.float_([0,0,0])
+    # maxPnt=np.float_([0,0])
+    # pBox=entity.GetBoundingBox
+    # minx=pBox()[0][0]
+    # miny=pBox()[0][1]
+    # maxx=pBox()[1][0]
+    # maxy=pBox()[1][1]
     retval=GetBoundingBox(entity)
     mat=multi(move(-retval[0],-retval[1]),shear(1),move(retval[0],retval[1]))
     newcoor=transform(mat,coor)
@@ -85,13 +95,13 @@ def job3():
     entity.Color=ACAD.acYellow
     acad.doc.Regen(1)
         
-
 def transform(matrix:list,coor:list):
     '''transform a list of coor via transformation matrix
 
     00 01 02    i
     10 11 12  * i+1
     0   0   1     1
+    只算前两行
     '''
     newcoor=[]
     for i in range(0,len(coor),2):
@@ -103,6 +113,8 @@ def transform(matrix:list,coor:list):
 
 def multi(mat1,mat2,mat3=None):
     '''mat2*mat1
+
+    只算前两行
     '''
     if not mat3:
         mat=[[0,0,0],[0,0,0],[0,0,1]]
@@ -168,6 +180,8 @@ def reflect(lx,ly):
     return matrix
 
 def center(coor):
+    '''得到几何中心
+    '''
     coorx=coor[::2]
     coory=coor[1::2]
     return sum(coorx)/len(coorx),sum(coory)/len(coory)
@@ -176,6 +190,8 @@ def distance(x1,y1,x2,y2):
     return sqrt((x1-x2)**2+(y1-y2)**2)
 
 def longestDiagonalLine(coor):
+    '''得到最长对角线起点和终点的坐标
+    '''
     coorx=coor[::2]
     coory=coor[1::2]
     diagonal=[]
@@ -189,6 +205,8 @@ def longestDiagonalLine(coor):
     return coorx[longest[0]],coory[longest[0]],coorx[longest[1]],coory[longest[1]]
 
 def GetBoundingBox(entity):
+    '''得到boundingbox仅限于lwpolyline
+    '''
     coor=entity.Coordinates
     coorx=coor[::2]
     coory=coor[1::2]
@@ -197,14 +215,18 @@ def GetBoundingBox(entity):
     return minx,miny,maxx,maxy
 
 def test():
+    '''test
+    '''
     coor=[1,0,1,1,0,2,-1,1,-1,0]
     vectorcoor=longestDiagonalLine(coor)        
     angle=acad.doc.Utility.AngleFromXAxis(APoint(*vectorcoor[0:2]),APoint(*vectorcoor[2:4]))
     print(angle)
-
-if __name__=="__main__":
     # a1=[[1,2,3],[4,5,6],[0,0,1]]
     # a2=[[1,2,3],[4,5,6],[7,8,9]]
     # coor=transform(a1,[1,2])
     # print(coor)
+
+if __name__=="__main__":
+    #job1()
+    #job2()
     job3()
