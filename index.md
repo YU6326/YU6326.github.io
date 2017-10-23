@@ -40,5 +40,5 @@ email: yuzhouwei6326@outlook.com
 
 某些bug：参数中无法返回，无法传递optional变量
 
-* [pyautocad demo](Doc.caddemo.py)
-* [pyautocad transformation](Doc.transformation.py)
+* [pyautocad demo](Doc/caddemo.py)
+* [pyautocad transformation](Doc/transformation.py)
