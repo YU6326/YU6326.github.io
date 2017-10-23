@@ -1,5 +1,35 @@
 # 补充：微分几何知识
 
+## 预备知识
+
+**定理** 设$a(t)$是一个非零连续可微函数，则
+1. 函数$a(t)$的长度是常数，当且仅当$a'(t)\cdotp a(t)\equiv 0$;
+2. 函数$a(t)$的方向不变，当且仅当$a'(t)\times a(t)\equiv 0$;
+3. 函数$a(t)$与一个确定方向垂直，当且仅当$(a(t),a'(t),a''(t))\text{(混合积)}\equiv 0;
+
+$proof.$
+1.
+$$
+\begin{aligned}
+&\because \frac{d}{dt}|a(t)|^2=2a'(t)\cdotp a(t)\\
+&\therefore |a(t)|^2=Const\iff a'(t)\cdotp a(t)=0
+\end{aligned}
+$$
+2.
+$\exists$单位常向量$b,\quad a(t)=f(t)\cdotp b$
+其中$f(t)$是连续可微函数
+$$
+\begin{aligned}
+\therefore\quad &a'(t)=f'(t)\cdotp b\\
+\therefore\quad&a'(t)\times a(t)=0
+\end{aligned}
+$$
+反之，设$a'(t)\times a(t)=0$,命$b(t)=a(t)/|a(t)|$,则$|b(t)|=1$由（1）知，$b'(t)\cdotp b(t)=0$,即$b'(t)\cdotp a(t)=0$.由定义可知
+$$a(t)=f(t)\cdotp b(t)$$
+其中$f(t)=|a(t)|$,则
+$$a'(t)=f'(t)\cdotp b(t)+f(t)\cdotp b'(t)$$
+$$a'(t)\times a(t)=f(t)\cdotp b'(t)\times a(t)=0$$
+因此$b'(t)\parallel a(t)$.由于$b'(t)\cdotp a(t)=0$,故$b'(t)=0$,即b(t)是常向量，即向量函数$a(t)$的方向不变。
 ## 曲线论
 
 1. 参数方程
@@ -89,7 +119,7 @@
 6. 一般参数曲线的曲率、挠率的计算
     * 空间曲线：$r=r(t)$
         * 曲率：$$\kappa=\frac{|r'(t)\times r''(t)|}{|r'(t)|^3}$$
-        * 挠率：$$\tau =\frac{r'(t)\times r''(t)\cdotp r'''(t)}{|r'(t)\times r''(t)|^2}$$
+        * 挠率：$$\tau =\frac{r'(t)\times r''(t)\cdotp r'''(t)}{|r'(t)\times r''(t)|^2}\text{(混合积)}$$
     推导：
     已经知道：$$T(s)=\frac{dr(s)}{ds},\quad \kappa=|\dot T(s)|=|\ddot r(s)|$$
     如果$\kappa \ne 0$,则
