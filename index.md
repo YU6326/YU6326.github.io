@@ -41,8 +41,10 @@ email: yuzhouwei6326@outlook.com
 * pyautocad demo(Doc/caddemo.py)
 * pyautocad transformation(Doc/transformation.py)
 * pyautocad curve(Doc.curve.py)
+* pyautocad annotation(Doc.annotation.py)
 
 #### 某些bug：
+
 * iter\_objects(),find\_one()无法使用,在python3.4中无此bug
 * 函数无法从输入的参数中获得返回值(如getboundingbox),在python3.4中无此bug
 * 无法传递第一个参数为空的optional变量(如getpoint(,'prompt'))

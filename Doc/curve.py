@@ -1,29 +1,44 @@
 # -*- coding: utf-8 -*-
 
-from pyautocad import Autocad,APoint,aDouble,ACAD
-import pyautocad
+from pyautocad import Autocad,APoint,aDouble,ACAD,distance
 from math import *
+import time
+import sys
+import random
+import numpy as np
 
 acad=Autocad(create_if_not_exists=True)
 
 def job1():
     old_pdmode=acad.doc.GetVariable('pdmode')
     acad.doc.SetVariable('pdmode',2)
-    n=acad.doc.Utility.GetInteger('\n请输入点的个数(至少3个):')
+    n=acad.doc.Utility.GetInteger('请输入点的个数(至少3个):')
     if n<3:
         acad.prompt('输入点数量有误，程序终止')
         return
     ptlist=[]
     for i in range(n):
-        prompt1='\n请输入第%d个点'% (i+1)
-        acad.prompt(str(prompt1))
-        try:
-            pt=acad.doc.Utility.GetPoint()
-        except Exception:
-            acad.prompt('输入有误，请重新输入')
-        apt=APoint(pt)
-        acad.model.AddPoint(apt)
-        ptlist.append(apt)
+        prompt1='请输入第%d/%d个点'% (i+1,n)
+        prompt1=str(prompt1)
+        acad.prompt(prompt1)
+        while True:#遇到呼叫错误，不断重复尝试。
+            try:
+                pt=acad.doc.Utility.GetPoint()
+            except Exception:
+                time.sleep(0.2)
+                acad.doc.Regen(ACAD.acActiveViewport)
+                acad.prompt(prompt1)
+                print('呼叫错误，重试')
+            else:
+                break
+        # try:
+        #     pt=acad.doc.Utility.GetPoint()
+        # except Exception:
+        #     acad.prompt('输入有误，请重新输入')
+        time.sleep(0.1)
+        pt=APoint(pt)
+        acad.model.AddPoint(pt)
+        ptlist.append(pt)
     while True:
         closed=acad.doc.Utility.GetString(0,'\n曲线是否闭合Y(闭合)/N(不闭合)?默认Y')
         if closed=='' or closed.lower()=='y':
@@ -36,16 +51,19 @@ def job1():
             acad.prompt('输入有误，请重新输入！')
     thetalist=CalcuTheta(ptlist,tagclosed)
     pqlist=CalcuParam(ptlist,thetalist,tagclosed)
+    del thetalist
+    del ptlist
     coor=AddCoor(pqlist)
+    coor=[round(x,5) for x in coor]
     en=acad.model.AddLightWeightPolyline(aDouble(coor))
-    en.Color=ACAD.acBlue
+    en.Color=random.randint(1,7)
     acad.doc.SetVariable('pdmode',old_pdmode)
 
 
 def CalcuParam(ptlist,thetalist,tagclosed):
     pqlist=[]#排列方式[[p0 p1 p2 p3 q0 q1 q2 q3],...]
     for i in range(-len(ptlist),tagclosed-1):
-        r=pyautocad.distance(ptlist[i],ptlist[i+1])
+        r=distance(ptlist[i],ptlist[i+1])
         para=[]
         para.append(ptlist[i][0])
         para.append(r*thetalist[i][0])
@@ -87,8 +105,12 @@ def CalcuTheta(ptlist,tagclosed):
         a0=w2*ablist[1][0]+w3*ablist[2][0]
         b0=w2*ablist[1][1]+w3*ablist[2][1]
         root=sqrt(a0*a0+b0*b0)
-        costheta=a0/root
-        sintheta=b0/root
+        try:
+            costheta=a0/root
+            sintheta=b0/root
+        except ZeroDivisionError:
+            acad.prompt('前后两个点重叠!')
+            sys.exit()
         thetalist.append((costheta,sintheta))
     return thetalist
 
