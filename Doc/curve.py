@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from pyautocad import Autocad,APoint,aDouble,ACAD,distance
 from math import *
 import time
 import sys
 import random
-import numpy as np
 
 acad=Autocad(create_if_not_exists=True)
 

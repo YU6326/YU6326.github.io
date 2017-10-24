@@ -85,8 +85,6 @@ def GetOrientionArea(ptlist):
         print('多义线未闭合')
     return
 
-
-
 def GetIndex(ptlist,leftup):
     lenlist=[]
     for item in ptlist:
