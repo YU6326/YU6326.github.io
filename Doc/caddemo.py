@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyautocad import Autocad,APoint,aDouble,aInt,aShort,ACAD
 import math
 from comtypes.automation import VARIANT

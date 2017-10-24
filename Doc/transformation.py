@@ -1,10 +1,7 @@
-
 # -*- coding: utf-8 -*-
-# 编译器Python3.6 64bit
-# 相关包：pyautocad,comtypes,numpy
-# (因为numpy的数据类型无bug，可能跟comtypes的内部数据类型转换有关)
+# 编译器Python3.6/3.4 64bit
+# 相关包：pyautocad,comtypes
 from pyautocad import Autocad,APoint,aDouble,aShort,aInt,ACAD
-import numpy as np
 from math import *
 
 acad=Autocad(create_if_not_exists=True)
@@ -17,12 +14,11 @@ def job1():
         acad.doc.SelectionSets.Item('SS1').Delete()
     except Exception:
         print('Delete selection failed')
-
     selection=acad.doc.SelectionSets.Add('SS1')
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(np.int(0))
+        entity=selection.Item(0)
     else:
         print("选择的多义线多于一条")
         return
@@ -45,7 +41,7 @@ def job2():
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(np.int(0))
+        entity=selection.Item(0)
     else:
         print("选择的多义线多于一条")
         return
@@ -76,7 +72,7 @@ def job3():
     acad.prompt('选择一条多义线')
     selection.SelectOnScreen(aShort([0]),['lwpolyline'])
     if selection.Count==1:
-        entity=selection.Item(np.int(0))
+        entity=selection.Item(0)
     else:
         print("选择的多义线多于一条")
         return
@@ -227,6 +223,6 @@ def test():
     # print(coor)
 
 if __name__=="__main__":
-    #job1()
-    #job2()
+    job1()
+    job2()
     job3()
