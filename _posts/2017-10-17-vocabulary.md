@@ -1,4 +1,12 @@
-## 摄影测量专业词汇
+---
+layout:     post
+title:      "摄影测量专业词汇"
+date:       2017-10-17
+author:     "YU"
+categories: [摄影测量]
+tags:
+    - 摄影测量
+---
 
 ### A-E
 

@@ -36,7 +36,7 @@ def job5():
             num+=1
     area=round(area,2)
     point=GetInner(ptlist)
-    acad.model.AddText('面积=%f'%area,point,height)
+    acad.model.AddText('面积=%s'%area,point,height)
 
 def GetBoundingBox(coor):
     '''得到boundingbox仅限于lwpolyline
