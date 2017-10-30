@@ -55,7 +55,7 @@ def job1():
     coor=[round(x,5) for x in coor]
     en=acad.model.AddLightWeightPolyline(aDouble(coor))
     en.Color=random.randint(1,7)
-    acad.doc.SetVariable('pdmode',old_pdmode)
+    # acad.doc.SetVariable('pdmode',old_pdmode)
 
 
 def CalcuParam(ptlist,thetalist,tagclosed):
