@@ -41,8 +41,11 @@ email: yuzhouwei6326@outlook.com
 
 ### python
 
-开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
+* [python入门](posts/2017-11-2-python.md)
+* [numpy学习](posts/2017-11-2-numpy.md)
 
+pyautocad的开发环境：
+开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
 #### 某些bug：
 
 * iter\_objects(),find\_one()无法使用,在python3.4中无此bug
