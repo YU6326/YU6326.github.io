@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "地球坐标系和地球椭球"
 date:       2017-10-15
 author:     "YU"

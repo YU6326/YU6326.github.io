@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "摄影测量专业词汇"
 date:       2017-10-17
 author:     "YU"
