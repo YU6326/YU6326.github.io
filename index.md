@@ -6,7 +6,6 @@
 
 email: yuzhouwei6326@outlook.com
 
-![img1](assets/github-48.png)
 
 <p align="center">
 [View on Github](https://github.com/YU6326)
@@ -14,25 +13,25 @@ email: yuzhouwei6326@outlook.com
 
 ## 地理空间数据库原理
 
-* [地理配准](_posts/2017-10-15-地理配准.md)
-* [ArcGIS矢量化](_posts/2017-10-15-矢量化.md)
-* [CAD数据入库及拓扑检查](_posts/2017-10-15-数据入库.md)
+* [地理配准](posts/2017-10-15-地理配准.md)
+* [ArcGIS矢量化](posts/2017-10-15-矢量化.md)
+* [CAD数据入库及拓扑检查](posts/2017-10-15-数据入库.md)
 
 ## 计算机图形学
 
-* [VBA语法速查](_posts/2017-10-17-VBA语法.md)
-* [几何变换](_posts/2017-10-17-坐标变换.html)
+* [VBA语法速查](posts/2017-10-17-VBA语法.md)
+* [几何变换](posts/2017-10-17-坐标变换.html)
 
 ## 现代大地控制测量
 
 **写作宗旨**:拒绝毫无根据的结论和简陋的推导，不引入无意义的量
-* [微分几何基础](_posts/2017-10-15-diffgeo.html)
-* [地球坐标系和地球椭球](_posts/2017-10-15-geodesy-chapter2.html)
+* [微分几何基础](posts/2017-10-15-diffgeo.html)
+* [地球坐标系和地球椭球](posts/2017-10-15-geodesy-chapter2.html)
 
 ## 摄影测量
 
-* [射影几何基础](_posts/2017-10-17-projgeo.html)
-* [摄影测量专业词汇](_posts/2017-10-17-vocabulary.md)
+* [射影几何基础](posts/2017-10-17-projgeo.html)
+* [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
 ## 小程序
 
