@@ -264,7 +264,7 @@ class Ptlist(tuple):
             mat1=np.mat([[1,s1,s1*s1],[1,s2,s2*s2],[1,s3,s3*s3]])
             matx=np.mat([[ptlistplus[i-1][0]],[ptlistplus[i][0]],[ptlistplus[i+1][0]]])
             maty=np.mat([[ptlistplus[i-1][1]],[ptlistplus[i][1]],[ptlistplus[i+1][1]]])
-            inv=mat1**-1
+            inv=np.linalg.inv(mat1)
             matabc=np.dot(inv,matx)
             matabc=matabc.tolist()
             matabc=[a[0] for a in matabc]
