@@ -37,7 +37,7 @@ email: yuzhouwei6326@outlook.com
 
 ### lisp
 
-* [lisp小程序](Lisp/lisp1.md)
+* [lisp小程序](posts/2017-10-16-lisp.md)
 
 ### python
 
