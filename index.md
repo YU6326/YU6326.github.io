@@ -33,13 +33,11 @@ email: yuzhouwei6326@outlook.com
 * [射影几何基础](posts/2017-10-17-projgeo.html)
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
-## 小程序
-
-### lisp
+## lisp
 
 * [lisp小程序](posts/2017-10-16-lisp.md)
 
-### python
+## python
 
 * [python入门](posts/2017-11-2-python.md)
 * [numpy学习](posts/2017-11-2-numpy.md)
