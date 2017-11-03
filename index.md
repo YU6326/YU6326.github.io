@@ -24,6 +24,7 @@ github:[View on Github](https://github.com/YU6326)
 **写作宗旨**:拒绝毫无根据的结论和简陋的推导，不引入无意义的量
 * [微分几何基础](posts/2017-10-15-diffgeo.html)
 * [地球坐标系和地球椭球](posts/2017-10-15-geodesy-chapter2.html)
+* [椭圆积分](posts/2017-11-3-ellipse.html)
 
 ## 摄影测量
 
