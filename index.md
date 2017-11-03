@@ -30,11 +30,11 @@ github:[View on Github](https://github.com/YU6326)
 * [射影几何基础](posts/2017-10-17-projgeo.html)
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
-## lisp
+## Lisp
 
 * [lisp小程序](posts/2017-10-16-lisp.md)
 
-## python
+## Python
 
 * [python入门](posts/2017-11-2-python.md)
 * [numpy学习](posts/2017-11-2-numpy.md)
