@@ -6,10 +6,7 @@
 
 email: yuzhouwei6326@outlook.com
 
-
-<p align="center">
-[View on Github](https://github.com/YU6326)
-</p>
+github:[View on Github](https://github.com/YU6326)
 
 ## 地理空间数据库原理
 
