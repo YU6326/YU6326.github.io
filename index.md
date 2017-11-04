@@ -41,6 +41,7 @@ github:[View on Github](https://github.com/YU6326)
 * [numpy学习](posts/2017-11-2-numpy.md)
 * [numpy矩阵](posts/2017-11-4-numpymat.md)
 * [numpy随机](posts/2017-11-4-numpyrandom.html)
+* [matplotlab python绘图](posts/2017-11-4-matplotlab.md)
 
 pyautocad的开发环境：
 开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
