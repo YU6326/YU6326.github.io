@@ -103,6 +103,7 @@ To get a list of settable line properties, call the setp() function with a line 
 ### 常用属性简介
 
 1. 颜色字符
+
 | character | color |
 |-----------|-------|
 b | blue
@@ -115,6 +116,7 @@ k | black
 w | white
 
 2. 线条样式 linestyle
+
 | linestyle | description |
 |-----------|-------------|
 \- | solid
@@ -123,6 +125,7 @@ w | white
 : | dotted,虚点线
 
 3. 点样式 marker
+
 | character | description |
 |-----------|-------------|
 . | dot

@@ -8,6 +8,14 @@ email: yuzhouwei6326@outlook.com
 
 github:[View on Github](https://github.com/YU6326)
 
+## 数学
+
+* [几何变换](posts/2017-10-17-坐标变换.html)
+* [微分几何基础](posts/2017-10-15-diffgeo.html)
+* [椭圆积分简介](posts/2017-11-3-ellipse.html)
+* [射影几何基础](posts/2017-10-17-projgeo.html)
+* [反对称矩阵](posts/2017-11-5-matrix1.html)
+
 ## 地理空间数据库原理
 
 * [地理配准](posts/2017-10-15-地理配准.md)
@@ -17,18 +25,14 @@ github:[View on Github](https://github.com/YU6326)
 ## 计算机图形学
 
 * [VBA语法速查](posts/2017-10-17-VBA语法.md)
-* [几何变换](posts/2017-10-17-坐标变换.html)
 
 ## 现代大地控制测量
 
 **写作宗旨**:拒绝毫无根据的结论和简陋的推导，不引入无意义的量
-* [微分几何基础](posts/2017-10-15-diffgeo.html)
 * [地球坐标系和地球椭球](posts/2017-10-15-geodesy-chapter2.html)
-* [椭圆积分](posts/2017-11-3-ellipse.html)
 
 ## 摄影测量
 
-* [射影几何基础](posts/2017-10-17-projgeo.html)
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
 ## Lisp
