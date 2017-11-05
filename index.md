@@ -1,4 +1,4 @@
-# 余周炜|YU6326 的博客
+# YU6326 的博客
 
 记录有关Geographic Information System的学习笔记
 
@@ -15,6 +15,7 @@ github:[View on Github](https://github.com/YU6326)
 * [椭圆积分简介](posts/2017-11-3-ellipse.html)
 * [射影几何基础](posts/2017-10-17-projgeo.html)
 * [反对称矩阵](posts/2017-11-5-matrix1.html)
+* [空间坐标系的旋转与欧拉角](posts/2017-11-5-rotation.html)
 
 ## 地理空间数据库原理
 
@@ -35,7 +36,7 @@ github:[View on Github](https://github.com/YU6326)
 
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
-## Lisp
+## AutoLISP
 
 * [lisp小程序](posts/2017-10-16-lisp.md)
 
@@ -46,15 +47,3 @@ github:[View on Github](https://github.com/YU6326)
 * [numpy矩阵](posts/2017-11-4-numpymat.md)
 * [numpy随机](posts/2017-11-4-numpyrandom.html)
 * [matplotlab python绘图](posts/2017-11-4-matplotlab.md)
-
-pyautocad的开发环境：
-开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
-
-### 某些bug：
-
-* iter\_objects(),find\_one()无法使用,在python3.4中无此bug
-* 函数无法从输入的参数中获得返回值(如getboundingbox),在python3.4中无此bug？
-* 无法传递第一个参数为空的optional变量(如getpoint(,'prompt'))
-* GetPoint()在多次获取点坐标时可能会失败(<0.2)
-* 选择集删除可能会不成功(<0.1)
-* str类型的变量偶尔会无法转换(<0.05)
