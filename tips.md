@@ -12,6 +12,8 @@
 code
 ```
 
+* md上可以用相对路径，html上似乎有问题
+
 pyautocad的开发环境：
 开发环境：python3.6.2 64bit AutoCad2016(据说python3.4支持更好)
 
