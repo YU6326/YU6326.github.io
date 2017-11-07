@@ -1,19 +1,16 @@
 # YU6326 的博客
 
-记录有关Geographic Information System的学习笔记
-
 版权声明：商业转载请联系作者获得授权,非商业转载请注明出处(https://YU6326.github.io），若存在侵权请联系作者删除。
+
+评论请转到Github。
 
 email: yuzhouwei6326@outlook.com
 
-github:[View on Github](https://github.com/YU6326)
+github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 
 ## 数学
 
 * [几何变换](posts/2017-10-17-坐标变换.html)
-* [微分几何基础](posts/2017-10-15-diffgeo.html)
-* [椭圆积分简介](posts/2017-11-3-ellipse.html)
-* [射影几何基础](posts/2017-10-17-projgeo.html)
 * [反对称矩阵](posts/2017-11-5-matrix1.html)
 * [空间坐标系的旋转与欧拉角](posts/2017-11-5-rotation.html)
 
@@ -31,9 +28,13 @@ github:[View on Github](https://github.com/YU6326)
 
 **写作宗旨**:拒绝毫无根据的结论和简陋的推导，不引入无意义的量
 * [地球坐标系和地球椭球](posts/2017-10-15-geodesy-chapter2.html)
+* [微分几何基础](posts/2017-10-15-diffgeo.html)
+* [椭圆积分简介](posts/2017-11-3-ellipse.html)
 
 ## 摄影测量
 
+* [射影几何(一)](posts/2017-10-17-projgeo.html)
+* [射影几何(二)](posts/2017-11-7-projgeo2.html)
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
 ## AutoLISP
@@ -43,7 +44,7 @@ github:[View on Github](https://github.com/YU6326)
 ## Python
 
 * [python入门](posts/2017-11-2-python.md)
-* [numpy学习](posts/2017-11-2-numpy.md)
+* [numpy入门](posts/2017-11-2-numpy.md)
 * [numpy矩阵](posts/2017-11-4-numpymat.md)
 * [numpy随机](posts/2017-11-4-numpyrandom.html)
 * [matplotlab python绘图](posts/2017-11-4-matplotlab.md)

@@ -313,8 +313,8 @@ class Mat(tuple):
         raise Exception('No coordinates input')
 
     def __mul__(self, other):
-        """warning:it calculate other*self
-
+        """
+        warning:it calculate other*self
         只算前两行
         """
         if isinstance(other,Mat):

@@ -12,6 +12,12 @@ tags:
 
 本文根据官方文档改编。
 
+使用中文标签，请加上：
+```python
+plt.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
+plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
+```
+
 ## 引入
 
 ```python
