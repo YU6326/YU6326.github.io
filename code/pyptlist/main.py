@@ -12,24 +12,36 @@ from math import *
 import sys
 import numpy as np
 
-class Ptlist(tuple):
-    """
-    注意Ptlist对象不可变
-    """
-    def __new__(cls,coor):
+class UnorderedPtlist(tuple):
+    def __new__(cls,coor,tagmove=False):
         """用得到的多义线坐标表生成该点表"""
         if isinstance(coor,(list,tuple,array.array)):
             mylist=[]
             if isinstance(coor[0],(float,int)):#如果是直接的坐标表，即x0,y0,x1,y1
                 for i in range(0,len(coor),2):
                     mylist.append(APoint(coor[i],coor[i+1]))
-                return super(Ptlist,cls).__new__(cls,mylist)
+                if tagmove:
+                    mylist=list(set(mylist))
+                return super(UnorderedPtlist,cls).__new__(cls,mylist)
             elif len(coor[0])==3:#已经是APoint数组了
-                return super(Ptlist,cls).__new__(cls,coor)
+                if tagmove:
+                    mylist=list(set(mylist))
+                return super(UnorderedPtlist,cls).__new__(cls,coor)
 
-    def __init__(self,coor):
+    def __init__(self,coor,tagmove=False):
         self.L=len(self)
-
+    
+    def GetBoundingBox(self):
+        """
+        返回最小坐标和最大坐标
+        """
+        coorx=[]
+        coory=[]
+        for item in self:
+            coorx.append(item[0])
+            coory.append(item[1])
+        return APoint(min(coorx),min(coory)),APoint(max(coorx),max(coory))
+    
     @property
     def Center(self):
         cenx=0
@@ -45,16 +57,122 @@ class Ptlist(tuple):
         min0,max0=self.GetBoundingBox()
         return APoint(min0[0],max0[1])
 
+    @property
     def Bottomleft(self):
         return self.GetBoundingBox()[0]
-
+    
+    @property
     def Topright(self):
         return self.GetBoundingBox()[1]
 
+    @property    
     def Bottomright(self):
         min0, max0 = self.GetBoundingBox()
         return APoint(min0[1], max0[0])
+    
+    def distance_to(self,apoint:APoint):
+        lenlist=[]
+        for item in self:
+            lenlist.append(distance(item, apoint))
+        return lenlist
 
+    def Transform(self,matrix):
+        """transform a list of coor via transformation matrix
+
+            00 01 02    i
+            10 11 12  * i+1
+            0   0   1     1
+            只算前两行
+        """
+        newcoor=[]
+        for i in range(0, self.L):
+            x = matrix[0][0] * self[i].x + matrix[0][1] * self[i].y + matrix[0][2]
+            y = matrix[1][0] * self[i].x + matrix[1][1] * self[i].y + matrix[1][2]
+            newcoor.append(APoint(x,y))
+        return newcoor
+        
+    def GetTopLeftIndex(self):
+        """返回离左上角最近点的索引"""
+        lenlist = self.distance_to(self.Topleft)
+        index0 = lenlist.index(min(lenlist))
+        return index0
+
+    def MBR(self):
+        """
+        Minimum Bounding Rectangle
+        """
+        bbox=self.GetBoundingBox()
+        ptl=[bbox[0],APoint(bbox[0].x,bbox[1].y),bbox[1],APoint(bbox[1].x,bbox[0].y)]
+        ptl=toLightWeightPolyline(ptl)
+        return ptl
+
+    def MER(self):
+        """
+        Minimum Enclosing Rectangle
+        """
+        rad=0
+        bboxlist=[]
+        while rad<2*pi:
+            newcoor=UnorderedPtlist(self.Transform(rotate(rad)))
+            bboxlist.append([newcoor.GetBoundingBox(),rad])
+            rad+=0.01
+        def areabbox(boundingbox):
+            return (boundingbox[1].x-boundingbox[0].x)*(boundingbox[1].y-boundingbox[0].y)
+
+        bboxmin=min(bboxlist,key=lambda item:areabbox(item[0]))
+        bbox=bboxmin[0]
+        ptl=[bbox[0],APoint(bbox[0].x,bbox[1].y),bbox[1],APoint(bbox[1].x,bbox[0].y)]
+        ptl=Ptlist(ptl)
+        ptl=ptl.Transform(rotate(-bboxmin[1]))
+        return toLightWeightPolyline(ptl)
+
+    def __findinitial(self):
+        bbox=self.GetBoundingBox()
+        for i in range(0,self.L):
+            if self[i].y==bbox[0].y:
+                return i
+
+    def ConvexHull(self):
+        """
+        包裹法(Jarvis步进法)
+        """
+        convex=[]#储存凸包点的序号
+        convex.append(self.__findinitial())#第一个点为最下方的那个点
+        for i in range(self.L):
+            v=self.__findnext(convex[-1])
+            if v!=convex[0]:
+                convex.append(v)
+            else:
+                break
+        map1=map(lambda i:self[i],convex)
+        return toLightWeightPolyline(map1)
+
+    def __findnext(self,start):
+        for i in range(self.L):
+            if i!=start:
+              if self.__allinleft(start,i):
+                  return i 
+
+
+    def __allinleft(self,i:int,j:int):
+        _A,_B,_C=0,0,0
+        for k in range(self.L):
+            if(k!=i and k!=j):
+                _A=self[j].y-self[i].y
+                _B=self[i].x-self[j].x
+                _C=self[j].x*self[i].y-self[i].x*self[j].y
+                if _A*self[k].x+_B*self[k].y+_C>0:
+                    return False
+        return True #如果有点在该直线上，也返回true
+
+    def ConcaveHull(self):
+        pass
+
+
+class Ptlist(UnorderedPtlist):
+    """
+    注意Ptlist对象不可变
+    """
     def DirectedArea(self):
         return self.GetDirectionArea()[1]
 
@@ -96,41 +214,6 @@ class Ptlist(tuple):
             ym=(self[i].y+self[i+1].y)/2
             edgecenter.append(APoint(xm,ym))
         return edgecenter
-
-    def GetBoundingBox(self):
-        coorx=[]
-        coory=[]
-        for item in self:
-            coorx.append(item[0])
-            coory.append(item[1])
-        return APoint(min(coorx),min(coory)),APoint(max(coorx),max(coory))
-
-    def GetTopLeftIndex(self):
-        """返回离左上角最近点的索引"""
-        lenlist = self.distance_to(self.Topleft)
-        index0 = lenlist.index(min(lenlist))
-        return index0
-
-    def distance_to(self,apoint):
-        lenlist=[]
-        for item in self:
-            lenlist.append(distance(item, apoint))
-        return lenlist
-
-    def Transform(self,matrix):
-        """transform a list of coor via transformation matrix
-
-            00 01 02    i
-            10 11 12  * i+1
-            0   0   1     1
-            只算前两行
-        """
-        newcoor=[]
-        for i in range(0, self.L):
-            x = matrix[0][0] * self[i].x + matrix[0][1] * self[i].y + matrix[0][2]
-            y = matrix[1][0] * self[i].x + matrix[1][1] * self[i].y + matrix[1][2]
-            newcoor.append(APoint(x,y))
-        return newcoor
 
     def GetLongestDiagonalLine(self):
         """得到最长对角线起点和终点的坐标,长度
