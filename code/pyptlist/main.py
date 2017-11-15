@@ -13,22 +13,24 @@ import sys
 import numpy as np
 
 class UnorderedPtlist(tuple):
-    def __new__(cls,coor,tagmove=False):
+    def __new__(cls,coor,tagMoveDup=False):
         """用得到的多义线坐标表生成该点表"""
         if isinstance(coor,(list,tuple,array.array)):
             mylist=[]
             if isinstance(coor[0],(float,int)):#如果是直接的坐标表，即x0,y0,x1,y1
                 for i in range(0,len(coor),2):
                     mylist.append(APoint(coor[i],coor[i+1]))
-                if tagmove:
-                    mylist=list(set(mylist))
+                if tagMoveDup:#去除重复元素
+                    mylist=
                 return super(UnorderedPtlist,cls).__new__(cls,mylist)
             elif len(coor[0])==3:#已经是APoint数组了
-                if tagmove:
-                    mylist=list(set(mylist))
+                if tagMoveDup:#去除重复元素
+                    mylist2=[]
+                    mylist2=[mylist2.append(i) for i in mylist if not i in mylist2]
+                    mylist=mylist2
                 return super(UnorderedPtlist,cls).__new__(cls,coor)
 
-    def __init__(self,coor,tagmove=False):
+    def __init__(self,coor,tagMoveDup=False):
         self.L=len(self)
     
     def GetBoundingBox(self):

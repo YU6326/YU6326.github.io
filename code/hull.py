@@ -8,7 +8,7 @@ def MBR():
     selection=acad.get_selection("选择一条多义线或不少于三个点")
     coor=[]
     if selection.count==1:
-        entity=selection.item(0)
+        entity=selection.Item(0)
         ptl=UnorderedPtlist(entity.Coordinates)
     elif selection.count>=3:
         for item in selection:

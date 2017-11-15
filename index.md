@@ -35,7 +35,7 @@ github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 
 * [射影几何(一)](posts/2017-10-17-projgeo.html)
 * [射影几何(二)](posts/2017-11-7-projgeo2.html)
-* [射影测量名词对照](posts/2017-11-14-projgeo-name.html)
+* [射影测量与射影几何](posts/2017-11-14-projgeo-name.html)
 * [摄影测量专业词汇](posts/2017-10-17-vocabulary.md)
 
 ## AutoLISP
@@ -50,7 +50,7 @@ github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 * [numpy随机](posts/2017-11-4-numpyrandom.html)
 * [matplotlab python绘图](posts/2017-11-4-matplotlab.md)
 
-## C#
+## C\#
 
 * [C#语法速览](posts/2017-11-7-Csharp.md)
 * [C#进阶](posts/2017-11-11-Csharp2.md)
