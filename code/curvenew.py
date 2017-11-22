@@ -45,7 +45,7 @@ def getpoint():#从cad中获得点
 
 def job1():
     ptlist,tagclosed=getpoint()
-    myptlist=pyptlist.Ptlist(ptlist)
+    myptlist=pyptlist.Polygon(ptlist)
     coor=myptlist.Akima(tagclosed)
     en=acad.model.AddLightWeightPolyline(np.float_(coor))
     en.Color=ACAD.acBlue
@@ -53,14 +53,14 @@ def job1():
 
 def job2():
     ptlist,tagclosed=getpoint()
-    myptlist = pyptlist.Ptlist(ptlist)
+    myptlist = pyptlist.Polygon(ptlist)
     coor = myptlist.Poly2interpolation(tagclosed)
     en = acad.model.AddLightWeightPolyline(np.float_(coor))
     en.Color = ACAD.acRed
 
 def jobcombine():
     ptlist,tagclosed=getpoint()
-    myptlist=pyptlist.Ptlist(ptlist)
+    myptlist=pyptlist.Polygon(ptlist)
     coor=myptlist.Akima(tagclosed)
     en=acad.model.AddLightWeightPolyline(np.float_(coor))
     en.Color=ACAD.acBlue

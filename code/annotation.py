@@ -16,7 +16,7 @@ def job5():
         print('选择的多义线多于一条')
         return
     coor=entity.Coordinates
-    ptlist=Ptlist(coor)
+    ptlist=Polygon(coor)
     leftup=ptlist.Topleft
     index0=ptlist.GetTopLeftIndex()
     retVal=ptlist.GetDirectionArea()

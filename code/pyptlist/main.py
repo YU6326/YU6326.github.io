@@ -11,8 +11,28 @@ import array
 from math import *
 import sys
 import numpy as np
+from pyptlist.vector import *
 
-class UnorderedPtlist(tuple):
+
+
+def MoveDupAPoint(ptl):
+    """
+    将APoint组成的列表去重,且保持顺序
+    """
+    # 不能用list(set()),因为作为键的只能是值对象，引用对象not hashable
+    # 不能用in 判断是否在里面，因为pyautocad包里面没有写此方法
+    ptl2=[ptl[0]]
+    for i in range(1,len(ptl)):
+        for item in ptl2:
+            if ptl[i]==item:
+                break
+        else:ptl2.append(ptl[i])
+    return ptl2
+
+
+
+
+class PointSet(tuple):
     def __new__(cls,coor,tagMoveDup=False):
         """用得到的多义线坐标表生成该点表"""
         if isinstance(coor,(list,tuple,array.array)):
@@ -21,21 +41,20 @@ class UnorderedPtlist(tuple):
                 for i in range(0,len(coor),2):
                     mylist.append(APoint(coor[i],coor[i+1]))
                 if tagMoveDup:#去除重复元素
-                    mylist=
-                return super(UnorderedPtlist,cls).__new__(cls,mylist)
+                    mylist=MoveDupAPoint(mylist)
+                return super(PointSet,cls).__new__(cls,mylist)
             elif len(coor[0])==3:#已经是APoint数组了
+                mylist=coor
                 if tagMoveDup:#去除重复元素
-                    mylist2=[]
-                    mylist2=[mylist2.append(i) for i in mylist if not i in mylist2]
-                    mylist=mylist2
-                return super(UnorderedPtlist,cls).__new__(cls,coor)
+                    mylist=MoveDupAPoint(mylist)
+                return super(PointSet,cls).__new__(cls,mylist)
 
     def __init__(self,coor,tagMoveDup=False):
         self.L=len(self)
     
     def GetBoundingBox(self):
         """
-        返回最小坐标和最大坐标
+        返回左下角点和右上角点的坐标
         """
         coorx=[]
         coory=[]
@@ -115,7 +134,7 @@ class UnorderedPtlist(tuple):
         rad=0
         bboxlist=[]
         while rad<2*pi:
-            newcoor=UnorderedPtlist(self.Transform(rotate(rad)))
+            newcoor=PointSet(self.Transform(rotate(rad)))
             bboxlist.append([newcoor.GetBoundingBox(),rad])
             rad+=0.01
         def areabbox(boundingbox):
@@ -124,29 +143,61 @@ class UnorderedPtlist(tuple):
         bboxmin=min(bboxlist,key=lambda item:areabbox(item[0]))
         bbox=bboxmin[0]
         ptl=[bbox[0],APoint(bbox[0].x,bbox[1].y),bbox[1],APoint(bbox[1].x,bbox[0].y)]
-        ptl=Ptlist(ptl)
+        ptl=PointSet(ptl)
         ptl=ptl.Transform(rotate(-bboxmin[1]))
         return toLightWeightPolyline(ptl)
 
     def __findinitial(self):
         bbox=self.GetBoundingBox()
+        bottom=[]
         for i in range(0,self.L):
             if self[i].y==bbox[0].y:
-                return i
+                bottom.append(i)
+        return min(bottom,key=lambda i:self[i].x)
 
-    def ConvexHull(self):
+    def GrahamScan(self):
+        vertex=[self.__findinitial()]
+        lst=list(range(self.L))
+        lst.remove(vertex[0]) #剩余点序
+        anglelist=dict(zip(lst,[Vector(self[vertex[0]],self[i]).angle() for i in lst])) #剩余点序的angle
+        lst.sort(key=lambda i:anglelist[i]) #将剩余点序按angle的从小到大排列
+        filterlist=[[lst[0]]] #将angle相同的剩余点序归类
+        for i in range(1,len(lst)):
+            if anglelist[lst[i]]==anglelist[lst[i-1]]:
+                filterlist[-1].append(lst[i])
+            else:
+                filterlist.append([lst[i]])
+        lst=[]
+        for item in filterlist:#每类中只有一个元素即取该元素，每类中有多个元素取到p0最远的元素
+            if len(item)==1:
+                lst.append(item[0])
+            else:
+                t=max(item,key=lambda i:distance(self[i],self[vertex[0]]))
+                lst.append(t)
+        vertex.append(lst[0])
+        vertex.append(lst[1])
+        for i in range(2,len(lst)):
+            while Vector(self[vertex[-2]],self[vertex[-1]]).side(self[lst[i]])!=-1:
+                vertex.pop()
+            vertex.append(lst[i])
+        map1=map(lambda i:self[i],vertex)
+        return toLightWeightPolyline(map1)
+        
+
+        
+    def JarvisMarch(self):
         """
         包裹法(Jarvis步进法)
         """
-        convex=[]#储存凸包点的序号
-        convex.append(self.__findinitial())#第一个点为最下方的那个点
+        vertex=[]#储存凸包点的序号
+        vertex.append(self.__findinitial())#第一个点为最下方的那个点
         for i in range(self.L):
-            v=self.__findnext(convex[-1])
-            if v!=convex[0]:
-                convex.append(v)
+            v=self.__findnext(vertex[-1])
+            if v!=vertex[0]:
+                vertex.append(v)
             else:
                 break
-        map1=map(lambda i:self[i],convex)
+        map1=map(lambda i:self[i],vertex)
         return toLightWeightPolyline(map1)
 
     def __findnext(self,start):
@@ -154,7 +205,6 @@ class UnorderedPtlist(tuple):
             if i!=start:
               if self.__allinleft(start,i):
                   return i 
-
 
     def __allinleft(self,i:int,j:int):
         _A,_B,_C=0,0,0
@@ -167,68 +217,103 @@ class UnorderedPtlist(tuple):
                     return False
         return True #如果有点在该直线上，也返回true
 
-    def ConcaveHull(self):
-        pass
 
+    def ConcaveHull(self,multiplier=1):
+        r=self.__def_r()
+        r=r*multiplier #测试搜索半径扩大
+        vertex=[]#储存凹包点的序号
+        centerli=[]
+        vertex.append(self.__findinitial())
+        for i in range(self.L*2):
+            circ=self.__circ_index(vertex[-1],r)
+            v,center=self.__rollnext(vertex,circ,r)
+            centerli.append(center)
+            if v!=vertex[0]:
+                vertex.append(v)
+            else:
+                break
+        map1=map(lambda i:self[i],vertex)
+        return toLightWeightPolyline(map1),centerli,r/2
 
-class Ptlist(UnorderedPtlist):
-    """
-    注意Ptlist对象不可变
-    """
-    def DirectedArea(self):
-        return self.GetDirectionArea()[1]
-
-    def Area(self):
-        """得到面积"""
-        return  abs(self.GetDirectionArea()[1])
-
-    def Direction(self):
-        """得到方向(True逆时针 False顺时针)"""
-        return self.GetDirectionArea()[0]
-
-    def GetDirectionArea(self):
-        """得到方向(True逆时针 False顺时针)和有向面积directedarea"""
-        darea=0
-        edgelist = []
-        for i in range(-self.L, 0):
-            darea += self[i].x * self[i + 1].y - self[i].y * self[i + 1].x
-        direction=True
-        if darea > 0:
-            direction=True
-        elif darea < 0:
-            direction=False
-        return direction,darea/2
-
-    def GetEdgeLength(self):
-        edgelist=[]
-        for i in range(-self.L,0):
-            edgelist.append((distance(self[i],self[i+1])))
-        return edgelist
-
-    def GetAverageEdgeLength(self):
-        el=self.GetEdgeLength()
-        return sum(el)/self.L
-
-    def GetEdgeCenter(self):
-        edgecenter=[]
-        for i in range(-self.L,0):
-            xm=(self[i].x+self[i+1].x)/2
-            ym=(self[i].y+self[i+1].y)/2
-            edgecenter.append(APoint(xm,ym))
-        return edgecenter
-
-    def GetLongestDiagonalLine(self):
-        """得到最长对角线起点和终点的坐标,长度
+    def __rollnext(self,vertex,circ,r):
         """
-        diagonal = []
-        length = self.L
-        for j in range(2, length // 2 + 1):
-            for i in range(length):
-                s = distance(self[i], self[i + j - length])
-                diagonal.append((i, i + j - length, s))
-        diagonal.sort(key=lambda x: x[2])
-        longest = diagonal.pop()
-        return self[longest[0]],self[longest[1]],longest[2]
+        r为每个点的搜索半径
+        """
+        def __keyangle(i):
+            vec1=Vector(self[vertex[-1]],self[vertex[-2]])
+            vec2=Vector(self[vertex[-1]],self[i])
+            return vec1.angle(vec2)
+        alpha=r/2 #r为圆半径
+        if len(vertex)==1:
+            for i in circ:
+                p1=self[vertex[-1]]
+                p2=self[i]
+                center=Vector(p1,p2).dist_intersect(alpha,alpha)#作圆
+                for j in circ:#对circ中的其他点
+                    if j!=i:
+                        if distance(self[j],center)<alpha:
+                            break
+                else:
+                    return i,center
+            raise ValueError("没找到此圆")
+        else:
+            if len(circ)==2:
+                if circ[0]==vertex[-2]:
+                    return circ[1],center
+                return circ[0],center
+            else:
+                circ.sort(key=__keyangle)#对圆中点排序
+                p1=self[vertex[-1]]
+                for i in circ:
+                    if i!=vertex[-2]:
+                        p2=self[i]
+                        center=Vector(p1,p2).dist_intersect(alpha,alpha)
+                        for j in circ:
+                            if j!=i:
+                                if distance(self[j],center)<alpha:
+                                    break
+                        else:
+                            return i,center
+            raise ValueError("未知错误")
+    def __def_r(self):
+        """
+        定义搜索半径，保证每个搜索半径内至少有两个点
+        """
+        minlist=[]
+        for item in self:
+            lenlist=self.distance_to(item)
+            lenlist.sort()
+            min3=lenlist[3]
+            minlist.append(min3)
+        return max(minlist)
+
+    def __circ_index(self,poi,r):
+        """
+        返回在以po为圆心，以r为半径内的点的序号，不含本身
+        """
+        ilist=[]
+        d=0
+        for i in range(0,self.L):
+            d=distance(self[poi],self[i])
+            if d<=r and d:
+                ilist.append(i)
+        return ilist
+
+    # def __findnext2(self,vertex,circ:list):
+    #     anglelist=[]
+    #     if len(vertex)==1:
+    #         for i in circ:
+    #             vec=Vector(self[vertex[-1]],self[i])
+    #             anglelist.append(vec.angle())
+    #         return circ[anglelist.index(min(anglelist))]    
+    #     else:
+    #         circ.remove(vertex[-2])
+    #         vec=Vector(self[vertex[-1]],self[vertex[-2]])
+    #         veci=[Vector(self[vertex[-1]],self[i]) for i in circ]
+    #         anglelist=vec.angle(*veci)
+    #         return circ[anglelist.index(min(anglelist))]
+        
+class Polyline(PointSet):
 
 #以下为Akima插值
 
@@ -387,6 +472,13 @@ class Ptlist(UnorderedPtlist):
         return coorlist
 
 
+
+
+
+
+    
+
+
 ##########################################################################
 #以下为矩阵
 
@@ -421,6 +513,18 @@ class Mat(tuple):
             return Mat(mat0)
         else:
             return list.__add__(self,other)
+    
+    def transform(self,*polist:APoint):
+        polist2=[]
+        for po in polist:
+            x = self[0][0] * po.x +self[0][1] * po.y + self[0][2]
+            y = self[1][0] * po.x + self[1][1] * po.y + self[1][2]
+            polist2.append(APoint(x,y))
+        if len(polist2)==1:
+            return polist2[0]
+        return tuple(polist2)
+
+
 
 #########################################################################
 
