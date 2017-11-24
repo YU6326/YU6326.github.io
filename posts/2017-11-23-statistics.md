@@ -7,216 +7,205 @@ tags:
     - 统计
 --- 
 
-## 平差和统计的概念区别
+# 数理统计基础
 
-平差认为，或者说测量学的书籍认为，测量获得的值有一定的“误差”，需要进行“改正”，所以：
-**真值=观测值+改正值**
-而统计中和物理学中认为观测值是真值加上一些误差（或者称“噪声”）引起的，所以：
-**观测值=真值+误差**
-在摄影测量和数据处理的相关教材中沿用此规定。本文以统计的概念入手，所以沿用此规定，希望读者注意区别。
+一般地，将随机变量大写，将观测值（随机变量的取值）小写，将参数的估计量加一尖（如$\hat\beta$），统计中一般是站在抽样前的立场上看，当随机变量观测之后大写也随着变成了小写。
 
-改正数和误差互为相反数。
-
-# 线性模型
-
-在数学中，变量关系有两种基本类型：函数关系和相关关系(dependent relationship),此种关系没有密切到如上所述的确定关系。
-
-假设因变量y和k个自变量$x_1,x_2,\cdots,x_k$之间存在简单的线性关系：
-$$y=\beta_0+\beta_1x_1+\cdots+\beta_kx_k+\varepsilon $$
-其中$\epsilon$是一个随机变量进一步假定对自变量的n组不同取值，得到因变量y的n次观测，则有：
-$$Y=X\beta+\varepsilon$$
-
-其中
-$$
-Y=
-\begin{pmatrix}
-y_1 \\ y_2 \\ \vdots \\y_n
-\end{pmatrix},
-X=\begin{pmatrix}
-1 & x_{11} & \ldots & x_{1k}\\
-1 & x_{21} & \ldots & x_{2k}\\
-\vdots & \vdots & & \vdots \\
-1 & x_{n1} & \ldots & x_{nk}
-\end{pmatrix},
-\beta=
-\begin{pmatrix}
-\beta_1 \\ \beta_2 \\ \vdots \\\beta_n
-\end{pmatrix},
-\varepsilon=
-\begin{pmatrix}
-\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\\varepsilon_n
-\end{pmatrix},
-$$
-这里$\varepsilon$表示随机误差向量，满足$E(\varepsilon)=\mathbf 0,cov(\varepsilon,\varepsilon)=\Sigma$
-称上述模型为**线性模型**，记为$(Y,X\beta,\Sigma)$,其中，Y称为观测向量，X是k个自变量在n此观测中的取值，因为选择观测的量是可以控制的，这是试验设计问题，称X为**设计矩阵**（design matirx),\beta 是未知的参数向量，一般假定$\Sigma$是已知的，在许多问题中还假定n此观测相互独立，有公共方差，此时$\Sigma=\sigma^2I_n$,这里$\sigma^2$是未知参数，称为误差方差。
-
-在间接平差（参数平差）中，一般将线性模型叫高斯—马尔柯夫模型（G-M模型），记为$\tilde L=L+\Delta=B\tilde X,D(L)=D(\Delta)=\sigma_0^2Q$,称Q为协因数阵（权逆阵）。
-
-Gauss-Markov条件：$cov(\varepsilon,\varepsilon)=\sigma^2I_n,E(\varepsilon)=\mathbf{0}$
-
-有时还需假定正态条件：$\varepsilon\sim N(\mathbf{0},\sigma^2I_n)$
-为了对未知参数进行估计，总假定试验次数n不小于线性回归模型包含的未知参数个数，且设计矩阵X是列满秩的，即：
-$$rank(X)=k+1$$
-
-使偏离平方和$\sum_{i=1}^n(y_i-\tilde y_i)^2$取最小值的$\beta$称为它的最小二乘估计(Least Squares Estimate)，简记为LS估计。这种求估计量的方法称为最小二乘法(Method of Least Squares)，始于C.F.Gauss(1809),H后来A.A.Markov(1900)做了重要工作，奠定了这方面基础。
-
-## 一元线性回归模型
-
-$$y=\beta_0+\beta_1x+\varepsilon$$
-
-假定$E(\varepsilon)=0,var(\varepsilon)=\sigma^2$,该式称为一元线性回归模型。如果加上正态条件，称其为一元线性回归模型。因为相信大家已有概率统计知识，故直接讲一般情况——多元线性回归模型。
-
-## 多元线性回归模型
-
-我们在这里讨论多元线性回归模型$(Y,X\beta,\sigma^2I_n)$
-
-### 参数$\beta$的估计
-
-使总偏离平方和
-$$
-\begin{aligned}
-Q(\beta)&=\sum_{i=1}^n[y_i-(\beta_0+\sum_{j=1}^kx_{ij}\beta_j)]^2 \\
-&= (Y-X\beta)^T(Y-X\beta)=||Y-X\beta||^2
-\end{aligned}
-$$
-达到最小的$\beta$记为$\hat\beta$即：
-$$||Y-X\hat\beta||^2=\underset{\beta}{min}||Y-X\beta||^2$$
-称$\hat\beta$为$\beta$的最小二乘估计。
-
-$$
-\begin{aligned}
-Q=&Q(\beta)=(Y-X\beta)^T(Y-X\beta)\\
-=& Y^TY-2\beta^TX^TY+\beta^TX^TX\beta
-\end{aligned}
-$$
-对$\beta$求导，并令其为0
-$$
-\frac{\partial Q}{\partial \beta}=-2X^TY+2X^TX\beta=0
-$$
-整理后即有：
-$$X^TX\beta=X^TY$$
-称该式为正规方程组(system of normal equations),记N为正规方程组的系数阵
-$$N=X^TX$$
-因为N为列满秩矩阵，可逆，则：
-$$\hat\beta=(X^TX)^{-1}X^TY$$
-（1）
-是正规方程组的解。
-
-### 最小二乘估计的性质
-
-设Y，Z为随机向量，A，B为常数矩阵，有下面两个结论：
-
-1. $E(AY)=AE(Y)$
-2. $cov(AY,BZ)=Acov(Y,Z)B^T$
-
-性质一 $\hat\beta$是$\beta$线性无偏估计
-$proof.$
-由（1），$\hat\beta$显然是线性估计？。
-$$E(\hat\beta)=E((X'X)^{-1}X'Y)=(X'X)^{-1}X'E(Y)=(X'X)^{-1}X'X\beta=\beta $$
-
-性质二 $cov(\hat\beta,\hat\beta)=\sigma^2(X'X)^{-1}=\sigma^2N^{-1}$
-$proof.$
-$$
-\begin{aligned}
-cov(\hat\beta,\hat\beta)&=cov((X'X)^{-1}X'Y,(X'X)^{-1}X'Y)\\
-&=(X'X)^{-1}X'cov(Y,Y)X(X'X)^{-1}\\
-&=\sigma^2(X'X)^{-1}X'X(X'X)^{-1}\\
-&=\sigma^2(X'X)^{-1}
-\end{aligned}
-$$
-可见$\hat\beta$的各分量在一般情况下并不独立
-
-对任一k+1维向量$C=(c_0,c_1,\ldots,c_k)'$,若存在n维向量L，使$E(L'Y)=C'\beta$,则称$C'\beta$为可估函数，而可估函数$C'\beta$的最小方差线性无偏估计，称为它的**最好线性无偏估计**(Best Linear Unbiased Estimate,BLUE)
-
-性质三 (Gauss-Markov定理)$C'\hat\beta$是$C'\beta$的最好线性无偏估计，其中$\hat\beta$是$\beta$的最小二乘估计，
-$proof.$
-由性质1易见$C'\hat\beta$是$C'\beta$的无偏估计，它显然是Y的线性函数，只需证明对$C'\beta$的任一线性无偏估计$T=L'Y$,有$var(T)\ge var(C'\hat\beta)$.
-设$T=L'Y$是$C'\beta$的无偏估计，则对任意$\beta$有：
-$$
-E(T)=E(L'Y)=L'E(Y)=L'X\beta=C'\beta
-$$
-$\therefore L'X=C'$
-注意到性质二，有
-$$var(T)=var(L'Y)=L'cov(Y,Y)L=\sigma^2L'L $$
-$$
-var(C'\beta=C'cov(\hat\beta,hat\beta)C=\sigma^2C(X'X)^{-1}C
-$$
-及
-$$
-\begin{aligned}
-0\le&||L-X(X'X)^{-1}C||^2\\
-=&L'L-C'(X'X)^{-1}C\\
-\therefore& var(C'\hat\beta)\le var(T)
-\end{aligned}
-$$
-
-性质四 在正态条件下，$C'\hat\beta$是$0C'\beta$的一致最小方差无偏估计。
-
-### $\sigma^2$的估计
-
-由最小二乘估计原理知道，在线性模型$(Y,X\beta,\sigma^2I_n)$中，$\beta$用它的最小二乘估计$\hat\beta$代替时，Q达到最小，记
-$$
-\hat Y=X\hat\beta
-$$
-表示n个试验点处Y的回归值，
-$$
-\hat\varepsilon=Y-\hat Y=Y-X\hat\beta
-$$
-表示实际观测值Y与它的回归值之差，称为**残差**，关于残差有如下性质
-
-性质五
-1. $E(\hat\varepsilon)=\mathbf{0}$
-2. $cov(\hat\varepsilon,\hat\varepsilon)=\sigma^2(I_n-X(X'X)^{-1}X')$
-3. $cov(\hat\beta,\hat\varepsilon)=0$
-
-1式显然成立，下证另外两式。
+总体：一个问题所研究的全部元素的集合
+个体：总体之中的每个元素
+样本：个体的指标值$(X_1,X_2,\cdots,X_n)$
+样本容量(Sample Size)：样本中所包含的个体数n
+样本观测值：对某次抽样观测得到$(X_1,X_2,\cdots,X_n)$的一组确定值$(x_1,x_2,\cdots,x_n)$
+样本空间：样本$(X_1,X_2,\cdots,X_n)$可能取值的全体，记为$\mathscr X$,它可以是n维空间，也可以是其中的一个子集，样本的一次观测值$(x_1,x_2,\cdots,x_n)$就是样本空间的一个点$(x_1,x_2,\cdots,x_n)\in\mathscr X$
+设总体X具有分布函数$F(x),(X_1,X_2,\cdots,X_n)$为取自总体的大小为n的样本，则$(X_1,X_2,\cdots,X_n)$的联合分布函数为$\prod_{i=1}^nF(x_i)$
+统计量：设$(X_1,X_2,\cdots,X_n)$是来自总体X的一个样本，$T=T(x_1,x_2,\cdots,x_n)$是样本空间$\mathscr X$上的实值函数，若$T(X_1,X_2,\cdots,X_n)$也是随机变量，且不依赖于任何未知参数则$T(X_1,X_2,\cdots,X_n)$为统计量（Statistics).
 记
 $$
-\begin{aligned}
-\hat\varepsilon=&Y-X\hat\beta=Y-X(X'X)^{-1}X'Y\\
-=&(I_n-X(X'X)^{-1}X')Y\overset{\triangle}{=}AY
-\end{aligned}
+\bar X=\frac{1}{n}\sum_{i=1}^nX_i,\quad S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2
 $$
-这里$A=I_n-X(X'X)^{-1}X'$
-不难验证A是对称幂等阵
+为样本均值和样本方差，称统计量
 $$
-A'=A,A^2=A
+A_k=\frac{1}{n}\sum_{i=1}^nX_i^k,\quad B_k=\frac{1}{n}(X_i-\bar X)^k
 $$
-$$
-\begin{aligned}
-cov(\hat\varepsilon,\hat\varepsilon)=&cov(AY,AY)=Acov(Y,Y)A'\\
-=&\sigma^2AA'=\sigma^2A=\sigma^2(I_n-X(X'X)^{-1}X')\\
-cov(\hat\beta,\hat\varepsilon)=&cov((X'X)^{-1}X'Y,AY)\\
-=&(X'X)^{-1}X'cov(Y,Y)A'\\
-=&\sigma^2(X'X)^{-1}X'A=0
-\end{aligned}
-$$
+为样本的k阶（原点）矩，和样本的k阶中心矩，样本的二阶中心矩$B_2$有时也记为$S_n^2$
 
-#### 几何意义
-
-下面给出最小二乘估计几$\hat\beta$与残差$\hat\varepsilon$的几何意义。如果把某个随机变量的n个观测值看成n维欧氏空间的一个向量，在此空间中，向量Y的长度定义为$||Y||=\sqrt{Y'Y}$,两个向量的距离定义为$||Y_1-Y_2||$
-
-记设计矩阵的列向量为$X_0,X_1,\cdots,X_k$,是n维欧氏空间中的k+1个向量，它们的线性组合构成了n维空间的一个线性子空间，记为$\mathscr L(X)$,对任一向量$\hat\beta,X\hat\beta\in\mathscr L(X)$,因此β的最小二乘估计$\hat\beta$就是在$\mathscr L(X)$中寻找一个向量$X\hat\beta$是的相应的$\hat\varepsilon$长度最短，这仅当$X\hat\beta$是$Y$在$\mathscr L(X)$中的投影时才能达到，如图由$X\hat\beta=X(X'X)^{-1}X'Y$,可以称：
-$$
-P=X(X'X)^{-1}X'
-$$
-![](/images/projection.png)
-为空间$\mathscr L(X)$上的投影阵(projective matrix),或帽子阵(hat matirx),容易看出，投影阵具有对称性，幂等性。
-当$\hat\beta$是$\beta$的最小二乘估计时，$\hat\varepsilon$表示Y到$\mathscr L(X)$的垂线，性质五的3式表示$\hat Y$与$\hat\varepsilon$相互垂直，
-
-记残差向量的长度平方，即
-$$
-Q_e=||\hat\varepsilon||^2=\hat\varepsilon'\hat\varepsilon
-$$
-为残差平方和
+常用关系：(下面将$\sum_{i=1}^n$简记为$\sum$)
 $$
 \begin{aligned}
-Q_e=&\hat\varepsilon'\hat\varepsilon=(Y-X\hat\beta)'(Y-X\hat\beta)=(AY)'(AY)\\
-=&Y'AY=\ldots=Y'Y-\hat Y'\hat Y
+\sum(X_i-\bar X)^2=& \sum(X_i^2+\bar X^2-2\bar XX_i)\\
+=& \sum X_i^2+n\bar X^2-2\bar X\sum X_i\\
+=&\sum X_i^2-n\bar X^2
 \end{aligned}
 $$
-上式说明残差向量$\hat\varepsilon$与估计量$\hat Y$的长度平方和等于观测向量$Y$的长度平方，同时也给出了$Q_e$的不同表达式。
+将总体的期望和方差记为$\mu,\sigma^2$,即：
+$$
+E(X)=\mu,\quad var(X)=\sigma^2
+$$
+(var是方差的现代记法)
 
+## 多元正态分布
+
+若随机向量X的联合分布密度函数为：
+$$
+f(x)=\frac{1}{(2\pi)^{\frac{n}{2}}|B|^{\frac{1}{2}}}\exp{(-\frac{1}{2}(x-a)'B^{-1}(x-a))}
+$$
+其中B为正定阵，则称随机向量X所服从的分布为多元正态分布，简记为$X\sim N_n(\mathbf a,B)$
+
+记法：设$X=(X_1,X_2,\cdots,X_n)',Y=(Y_1,Y_2,\cdots,Y_n)'$是两个随机向量，$Z=(Z_{ij})_{r\times s}$为随机矩阵，记：
+$$
+E(X)=(E(X_1),\cdots,E(X_n)),\quad E(Z)=(E(Z_{ij}))_{r\times s}
+$$
+$$
+var(X)=E((X-E(X))(X-E(X))')
+$$
+$$
+\rho_{ij}=\frac{cov(X_i,X_j)}{\sqrt{var(X_i)var{(X_j)}}}
+$$
+为$X_i$与$X_j$之间的线性相关系数，简称相关系数。
+
+$cov(X,Y)=(cov(Y,X))'=E((X-E(X))(Y-E(Y))')$
+
+E(X)称为X的数学期望（均值），var(X)或cov(X,X)称为X的协方差阵，cov(X,Y)称为X和Y的协方差阵。
+
+n元正态分布的性质：
+* 性质一：多元正态分布的边缘分布依然是正态分布。（反之未必成立）
+* 性质二：多元正态分布由它的前两阶矩完全确定。
+若$X\sim N_n(a,B)$则
+$$
+E(X)=a,\quad var(X)=B
+$$
+* 性质三：多元正态分布中$X=(_{X_2}^{X_1})\sim N_a(a,B)$则$X_1,X_2$相互独立的充要条件是它们不相关（协方差矩阵为零矩阵）
+* 性质四：（线性性），若$X\sim N_n(a,B)$，A是秩为m的$m\times n$的行满秩矩阵，b是m维实向量，则：
+$$
+Y\sim N_m(Aa+b,ABA')
+$$
+* 性质五：若$X\sim N_n(a,B)$，则存在一个正交变换$\Gamma $,使$Y=\Gamma(X-a$的各分量是相互独立，均值为0的正态变量。
+特别地，若$X\sim N_n(a,\sigma^2I_n)$，则$Y=\Gamma X\sim N_n(a,\sigma^2)$,即标准正态随机向量在正交变换下保持分布不变性。
+
+统计量的分布称为抽样分布(Sampling Distribution),它与样本的分布不同。
+
+（正态总体抽样分布定理）
+设$(X_1,X_2,\cdots,X_n)$是取自正态总体$N(\mu,\sigma^2)$的一个样本，则：
+* $\bar X\sim N(\mu,\sigma^2/n)\iff \sqrt n\cdot \frac{\bar X-\mu}{\sigma}\sim N(0,1)$
+* (总体均值方差均已知)$\frac{1}{\sigma^2}\sum (X_i-\mu)^2\sim \chi^2(n) $
+* （总体方差已知）$(n-1)S^2/\sigma^2=nS_n^2/\sigma^2=\frac{1}{\sigma^2}\sum (X_i-\bar X)^2\sim \chi^2(n-1) $
+* $\bar X,S^2$相互独立
+
+(总体方差未知) $T=\frac{\bar X-\mu}{S}\sqrt n\sim t(n-1)$
+
+(两个正态总体)设$(X_1,\cdots,X_{n_1})$是取自正态总体$N(\mu_1,\sigma_1^2)$的一个样本，$(Y_1,\cdots,Y_{n_2})$是取自正态总体$N(\mu_2,\sigma_2^2)$的一个样本，且两个样本相互独立，则：
+* $F=\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,n_2-2)$
+* 若$\sigma_1^2=\sigma_2^2=\sigma^2$,则：
+$$
+T=\frac{(\bar X-\bar Y)-(\mu_1-\mu_2)}{S_\omega\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2)
+$$
+其中
+$$
+S_\omega^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}
+$$
+称为两个样本的合并方差。(Pooled Variance)
+
+## 参数估计
+
+估计量(Estimator):直接用于估计参数的统计量，记作$\hat\theta$
+估计值(Estimate):将观测值代人估计量得到的一个具体数值
+估计(Estimation):将估计量和估计值的总称。
+矩估计(Moment Estimation)：当样本很大时，经验分布函数与总体分布函数十分近似，因而样本矩在一定程度上反映总体矩的特征。(K.Pearson,1902)
+将总体的矩用相应样本的矩替换。
+步骤：
+1. 将总体k阶矩写成参数的形式
+2. 将总体k阶矩用样本k阶矩代替
+3. 反解出参数
+
+极大似然估计(Maximum Likelihood Estimator,MLE,ML估计):认为出现概率最大的事件发生(C.F.Gauss 1821,R.A.Fisher 1922)
+似然(Likelihood):当某组观测值是依赖于一些参数的某一特定概率分布得到时，出现这组观测值的概率
+步骤：
+1. 写出样本的联合分布--似然函数
+2. 取对数，求极值。
+
+### 估计量的优良性准则
+
+* 均方误差(Mean Square Error,MSE)：$MSE(\hat\theta)=E(\hat\theta-\theta)^2$,（没有限定偏没偏），**对于无偏估计量，均方误差就是方差**。均方误差是评价点估计最一般的标准。
+关系：
+$$
+\begin{aligned}
+MSE(\hat\theta)=&E((\hat\theta-E\hat\theta)+(E\hat\theta-\theta))^2\\
+=& E(\hat\theta-E\hat\theta)^2+E(E\hat\theta-\theta)^2+2E(\hat\theta-E\hat\theta)(E\hat\theta-\theta)\\
+=& var(\hat\theta)+(E\hat\theta-\theta)^2+0\\
+=& var(\hat\theta)+b^2
+\end{aligned}
+$$
+均方误差的平方等于方差加上偏差的平方
+* 无偏性 $E(\hat\theta)=\theta$
+* 偏(Bias):$b=E(\hat\theta)-\theta$(与系统误差类似)
+* 渐近无偏估计 $\lim_{n\to \infty}E(\hat\theta)=\theta$
+* 可估函数：对于参数$\theta$的任一实值函数，如果θ的无偏估计量存在，也就是说有估计量$T=T(X_1,\cdots,X_n)$对一切θ，有：
+$$E(T)=g(\theta)$$
+则称$g(\theta)$为可估函数。
+不可估函数是存在的，设总体$X\sim b(n,p),0\lt p\lt 1,X_1$(一次试验)是取自这个总体的一个样本，则函数$g(p)=1/p$不可估。
+$proof$
+假设$g(p)$可估，构造一个估计量$T(X_1)$,记它的值为$T(i)=c_i,i=0,1,\cdots,n$使得对一切$0\lt p\le 1$，都有：
+$$
+E(T(X_1))=\sum_{i=0}^nc_i\binom{n}{k}p^i(1-p)^{n-i}=\frac{1}{p}
+$$
+这显然是不可能的，只要$g(p)$不是次数小鱼等于n的多项式，g(p)的无偏估计都不存在。
+如果$\hat\theta$是θ的无偏估计，不能推出$g(\hat\theta)$是g(θ)的无偏估计，除非g是线性函数。
+* 有效性 如果$\hat\theta$与$\hat\theta^*$都是未知参数$\theta$的无偏估计，如果
+$$
+var(\hat\theta^2)\le var(\hat\theta)
+$$
+则称$\hat\theta^*$比$\hat\theta$有效
+
+* 一致最小方差无偏估计
+我们引入下面记号，记
+$$
+U\overset{\triangle}{=}\{T:E(T)=g(\theta),var(T)\le\infty,\forall \theta\in\Theta \}
+$$
+U为可估函数g(θ)的方差有限的无偏估计的集合
+$$
+U_0\overset{\triangle}{=}\{T:E(T)=0,var(T)\le\infty,\forall \theta\in\Theta \}
+$$
+$U_0$是数学期望为0，方差有限的估计量的集合
+
+定义：设T为可估函数$g(\theta)$的无偏估计量，若对于任意的$\theta\in\Theta$，和$g(\theta)$的任意无偏估计量T，都有
+$$
+var(T_1)\le var(T)
+$$
+则称$T_1$是$g(\theta)$的一致最小方差无偏估计量(Uniformly Minimum Variance Unbiased Estimator,UMVUE)
+
+**定理**：设$T(X)$是$g(\theta)$的无偏估计，$var(T(X))\lt\infty,$则$T(X)$为UMVUE的充要条件是
+$$\forall \varphi(X)\in U_0,cov(\varphi(X),T(X))=0\iff E(\varphi T)=0$$
+$proof.$
+必要性：设$T(X)$是$g(\theta)$的UMVUE，$\forall \varphi(X)\in U_0,\lambda\in R$
+$\varphi'(X)=\lambda\varphi(X)+T(X)\in U,$
+$var(T(X))\le var(\lambda\varphi(X)+T(X)),(\because T(X) is UMVUE)$
+$\therefore \lambda^2var(\varphi(X))+2\lambda cov(\varphi(X),T(X))\ge 0 $
+由$\lambda\in R$的任意性知：$cov(\varphi(X),T(X))=0,\forall \theta\in\Theta$
+
+
+充分性：设$\forall \varphi(X)\in U_0,cov(\varphi(X),T(X))=0,\forall \theta\in\Theta$,要证$T(X)$是$g(\theta)$的UMVUE，若$\varphi'(X)\in U,T(X)-\varphi'(X)\in U_0$,由假设条件得：
+$$
+\begin{aligned}
+& cov(T(X)-\varphi'(X),T(X))=0\\
+& \because cov(X,Y)=E(XY)-EXEY\\
+& E(T-\varphi'(X))T(X)=0\\
+& E(T^2)-E(T\varphi')=0
+\end{aligned}
+$$
+由Schwarz不等式知：
+$$
+E^2T^2=E^2(T\varphi')\le ET^2E\varphi'^2
+$$
+$\therefore ET^2\le E\varphi'^2$
+又$ET=E\varphi'=g,varX=EX^2-E^2X$
+$varT\le var\varphi'$
+由$\varphi'\in U$的任意性可知，T是g的UMVUE
+
+* 相合性：
+定义：设T是$g(\theta)$的一个估计量，若对于任何$\theta\in\Theta,T_n$依概率收敛于$g(\theta)$,则称$T_n$是g的相合估计(Consistent Estimator)
+$$
+\lim_{n\to\infty}Pr\{|T_n-g(\theta)|\gt\varepsilon\}=0
+$$
 
 
 

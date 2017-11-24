@@ -8,13 +8,14 @@ email: yuzhouwei6326@outlook.com
 
 github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 
-## 数学
+## 数学与统计
 
 * [几何变换](posts/2017-10-17-坐标变换.html)
 * [反对称矩阵](posts/2017-11-5-matrix1.html)
 * [空间坐标系的旋转与欧拉角](posts/2017-11-5-rotation.html)
 * [矩阵的导数](posts/2017-11-23-matrixd.html)
-* [线性模型](posts/2017-11-23-statistics.html)
+* [数理统计基础](posts/2017-11-23-statistics.html)
+* [线性模型](posts/2017-11-24-linearmodel.html)
 
 ## 地理空间数据库原理
 
