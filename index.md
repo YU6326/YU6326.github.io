@@ -16,6 +16,7 @@ github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 * [矩阵的导数](posts/2017-11-23-matrixd.html)
 * [数理统计基础](posts/2017-11-23-statistics.html)
 * [线性模型](posts/2017-11-24-linearmodel.html)
+* [变积系数](posts/2017-11-24-cof-area.html)
 
 ## 地理空间数据库原理
 

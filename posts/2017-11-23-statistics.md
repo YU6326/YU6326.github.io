@@ -1,5 +1,5 @@
 ---
-title:      "回归模型"
+title:      "数理统计基础"
 date:       2017-11-23
 author:     "YU"
 categories: [数学]
