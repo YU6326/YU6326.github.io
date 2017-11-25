@@ -15,6 +15,7 @@ github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 * [空间坐标系的旋转与欧拉角](posts/2017-11-5-rotation.html)
 * [矩阵的导数](posts/2017-11-23-matrixd.html)
 * [数理统计基础](posts/2017-11-23-statistics.html)
+* [平差与统计的区别](posts/2017-11-25-adjustment.html)
 * [线性模型](posts/2017-11-24-linearmodel.html)
 * [变积系数](posts/2017-11-24-cof-area.html)
 

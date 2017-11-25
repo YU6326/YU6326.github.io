@@ -207,6 +207,8 @@ $$
 \lim_{n\to\infty}Pr\{|T_n-g(\theta)|\gt\varepsilon\}=0
 $$
 
+* 线性性：参数估计量是Y的线性函数。
+
 
 
 
