@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>C#网络通信</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <h1 class="mume-header" id="c&#x7F51;&#x7EDC;&#x901A;&#x4FE1;">C#网络通信</h1>
+
+<h2 class="mume-header" id="&#x6709;&#x5173;&#x7C7B;">有关类</h2>
+
+<ul>
+<li>Dns(Domain Name System)域名系统<br>
+Dns是一个静态类，将域名和IP地址相互映射。<br>
+域名解析：通过主机名，得到该主机名对应的IP地址的过程。</li>
+</ul>
+<pre class="language-csharp">Dns<span class="token punctuation">.</span><span class="token function">GetHostEntry</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Resolves a host name or IP address to an IPHostEntry instance</span>
+Dns<span class="token punctuation">.</span><span class="token function">GetHostEntry</span><span class="token punctuation">(</span>IPAddress<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Resolves an IP address to an IPHostEntry </span>
+Dns<span class="token punctuation">.</span><span class="token function">GetHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//返回本地主机名字符串</span>
+Dns<span class="token punctuation">.</span><span class="token function">GetHostAddresses</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Resolves a host name or IP address,返回主机地址组</span>
+Dns<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//作用同一，现已不用。</span>
+</pre>
+<ul>
+<li>
+<p>IPHostEntry类<br>
+将域名系统主机名和一组别名、一组IP地址联系起来。对应于一个主机。</p>
+<ul>
+<li>Properties:AddressList,Aliases,HostName</li>
+</ul>
+</li>
+<li>
+<p>IPAddress类<br>
+一个有关IP地址及其信息的类。</p>
+<ul>
+<li>Constructors:IPAddress(Byte[]),IPAddress(Int64)</li>
+<li>Fields:
+<ul>
+<li>Broadcast:返回广播IP地址</li>
+<li>Loopback:返回回环地址</li>
+</ul>
+</li>
+<li>Properties:
+<ul>
+<li>AddressFamily:得到IP地址的类型（enum，显示用ToString()方法），Returns InterNetwork for IPv4 or InterNetworkV6 for IPv6</li>
+</ul>
+</li>
+<li>Methods:
+<ul>
+<li>GetAddressBytes()</li>
+<li>Parse(String):将一段表示IP地址的字符串解析成IP地址</li>
+<li>ToString():将IP地址用字符串表示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>IPEndPoint类<br>
+用一个IP地址和一个端口号表示一个网络终端</p>
+<ul>
+<li>Constructors:IPEndPoint(Int64,Int32),IPEndPoint(IPAdress,Int32)</li>
+<li>Properties:
+<ul>
+<li>Address</li>
+<li>AddressFamily</li>
+<li>Port</li>
+</ul>
+</li>
+<li>Methods:
+<ul>
+<li>Create(SocketAddress):Creates an endpoint from a socket address.</li>
+<li>Serialize():Serializes(序列化) endpoint information into a SocketAddress instance</li>
+<li>ToString():返回有IP地址和端口号的字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Socket类<br>
+套接字</p>
+<ul>
+<li>Constructors:
+<ul>
+<li>Socket(SocketType,ProtocalType)</li>
+<li>Socket(AddressFamily,SocketType,ProtocalType)</li>
+</ul>
+</li>
+<li>Properties:
+<ul>
+<li>AddressFamily</li>
+<li>Available:Gets the amount of data that has been received from the network and is available to be read.If you are using a non-blocking Socket, Available is a good way to determine whether data is queued for reading, before calling Receive. The available data is the total amount of data queued in the network buffer for reading. If no data is queued in the network buffer, Available returns 0.</li>
+<li>Blocking:bool</li>
+<li>Connected:bool,Gets a value that indicates whether a Socket is connected to a remote host as of the last Send or Receive operation.</li>
+<li>IsBound:Gets a value that indicates whether the Socket is bound to a specific local port.</li>
+<li>LocalEndPoint</li>
+<li>ProtocalType:tcp/udp.....</li>
+<li>RemoteEndPoint</li>
+<li>SendBufferSize:Gets or sets a value that specifies the size of the send buffer of the Socket.Value:An Int32 that contains the size, in bytes, of the send buffer. The default is 8192.</li>
+<li>SocketType:Steam.....</li>
+<li>ReceiveBufferSize</li>
+</ul>
+</li>
+<li>Methods
+<ul>
+<li>Accept():Creates a new Socket for a newly created connection.</li>
+<li>Bind(EndPoint):Associates a Socket with a local endpoint</li>
+<li>Close():Closes the Socket connection and releases all associated resources.</li>
+<li>Connect(EndPoint):Establishes a connection to a remote host.</li>
+<li>Connect(IPAddress,Int32)</li>
+<li>Connect(String,Int32)</li>
+<li>Disconnect(Boolean):Closes the socket connection and allows reuse of the socket.</li>
+<li>Listen(int backlog):Places a Socket in a listening state.backlog:The maximum length of the pending connections queue.</li>
+<li>Receive(Byte[]):Receives data from a bound Socket into a receive buffer</li>
+<li>Receive(Byte[], Int32, SocketFlags)Receives the specified number of bytes of data from a bound Socket into a receive buffer, using the specified SocketFlags.</li>
+<li>Send(Byte[]):Sends data to a connected Socket.</li>
+<li>Send(Byte[], Int32, Int32, SocketFlags)Sends the specified number of bytes of data to a connected Socket, starting at the specified offset, and using the specified SocketFlags.</li>
+<li>SendFile(String)Sends the file fileName to a connected Socket object with the UseDefaultWorkerThread transmit flag</li>
+<li>Shutdown(SocketShutdown):SocketShutdown enum:Send,Receive,Both.Using Shutdown on a connectionless Socket is not recommended</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>TcpListener,TcpClient,UdpClient三个类均构筑于socket之上，与socket类似，下面举例说明，不再叙述。</p>
+</li>
+<li>
+<p>SocketAddress类<br>
+Stores serialized information from EndPoint derived classes</p>
+<ul>
+<li>Constructors:SocketAddress(AddressFamily),SocketAddress(AddressFamily,Int32 bufferSize)</li>
+<li>Properties:
+<ul>
+<li>Family:AddressFamily</li>
+<li>Item[Int32]:Gets or sets the specified index element in the * * * underlying buffer.</li>
+<li>Size</li>
+</ul>
+</li>
+<li>Methods:
+<ul>
+<li>ToString():Returns information about the socket address.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>NetworkStream类<br>
+继承自System.IO.Stream,provides the underlying stream of data for network access.The NetworkStream class provides methods for sending and receiving data over Stream sockets in blocking mode.</p>
+<ul>
+<li>Constructors:NetworkStream(Socket)</li>
+<li>Properties:Socket...</li>
+<li>Methods:
+<ul>
+<li>Close(Int32)Closes the NetworkStream after waiting the specified time to allow data to be sent.The Close method frees both unmanaged and managed resources associated with the NetworkStream. If the NetworkStream owns the underlying Socket, it is closed as well.<br>
+If a NetworkStream was associated with a TcpClient, the Close method will close the TCP connection, but not dispose of the associated TcpClient.</li>
+<li>Flush():Flushes data from the stream. This method is reserved for future use</li>
+<li>Read(Byte[],Int32,Int32):Reads data from the NetworkStream.<br>
+public override int Read (byte[] buffer, int offset, int size);<br>
+Returns The number of bytes read from the NetworkStream, or 0 if the socket is closed.<br>
+This method reads data into the buffer parameter and returns the number of bytes successfully read. If the socket is closed, the Read method returns 0. The Read operation reads as much data as is available, up to the number of bytes specified by the size parameter. If the remote host shuts down the connection, and all available data has been received, the Read method completes immediately and return zero bytes.</li>
+<li>Write(Byte[], Int32, Int32):Writes data to the NetworkStream</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The first 2 bytes of the underlying buffer are reserved for the AddressFamily enumerated value. When the SocketAddress is used to store a serialized IPEndPoint, the third and fourth bytes are used to store port number information. The next bytes are used to store the IP address. You can access any information within this underlying byte buffer by referring to its index position; the byte buffer uses zero-based indexing. You can also use the Family and Size properties to get the AddressFamily value and the buffer size, respectively. To view any of this information as a string, use the ToString method.</p>
+<h2 class="mume-header" id="ip&#x5730;&#x5740;">IP地址</h2>
+
+<p>IP地址分为IPv4和IPv6两大类。</p>
+<p>IPv4有32位,可以用“点分十进制法”表示：<br>
+将IP地址分为4段，用十进制数表示，每段数字范围0-255，段与段之间用点隔开，如：159.226.1.1.<br>
+IPv6有128位,可以用&quot;冒分十六进制法&quot;表示:(两个十六进制数=1B)<br>
+格式X:X:X:X:X:X:X:X 分为八段，每段16位，4个十六进制数<br>
+规则：每个X的前导0可以省略；全为0的X可以压缩为“::”,但“::”只能出现一次。<br>
+内嵌IPv4地址表示法<br>
+为了实现IPv4-IPv6互通，IPv4地址会嵌入IPv6地址中，此时地址常表示为：X:X:X:X:X:X:d.d.d.d，前96b采用冒分十六进制表示，而最后32b地址则使用IPv4的点分十进制表示，例如::192.168.0.1与::FFFF:192.168.0.1就是两个典型的例子，注意在前96b中，压缩0位的方法依旧适用</p>
+<p>IP地址可以视为网络标识号码与主机标识号码两部分，因此IP地址可分两部分组成，一部分为网络地址，另一部分为主机地址。IP地址分为A、B、C、D、E5类，它们适用的类型分别为：大型网络；中型网络；小型网络；多播地址；备用。常用的是B和C两类。<br>
+将IP地址分成了网络号和主机号两部分，设计者就必须决定每部分包含多少位。网络号的位数直接决定了可以分配的网络数（计算方法2<sup>网络号位数-2）；主机号的位数则决定了网络中最大的主机数（计算方法2</sup>主机号位数-2）。<br>
+互联网的IP地址由ICANN（Internet Corporation for Assigned Names and Numbers,互联网赋名和编号公司）组织管理。<br>
+InterNIC：负责美国及其他地区；<br>
+ENIC：负责欧洲地区；<br>
+APNIC（Asia Pacific Network Information Center）：负责亚太地区。</p>
+<p>IP地址分为公有地址和私有地址。<br>
+公有地址（Public address）由Inter NIC（Internet Network Information Center因特网信息中心）负责。这些IP地址分配给注册并向Inter NIC提出申请的组织机构。通过它直接访问因特网。<br>
+私有地址<br>
+私有地址（Private address）属于非注册地址，专门为组织机构内部使用。<br>
+以下列出留用的内部私有地址<br>
+A类 10.0.0.0--10.255.255.255<br>
+B类 172.16.0.0--172.31.255.255<br>
+C类 192.168.0.0--192.168.255.255</p>
+<p>最初设计互联网络时，为了便于寻址以及层次化构造网络，每个IP地址包括两个标识码（ID），即网络ID和主机ID。同一个物理网络上的所有主机都使用同一个网络ID，网络上的一个主机（包括网络上工作站，服务器和路由器等）有一个主机ID与其对应。Internet委员会定义了5种IP地址类型以适合不同容量的网络，即A类~E类。</p>
+<p>特殊的IP地址:</p>
+<ul>
+<li>每一个字节都为0的地址（“0.0.0.0”）对应于当前主机；</li>
+<li>IP地址中的每一个字节都为1的IP地址（“255．255．255．255”）是当前子网的广播地址；</li>
+<li>IP地址中凡是以“11110”开头的E类IP地址都保留用于将来和实验使用。</li>
+<li>IP地址中不能以十进制“127”作为开头，该类地址中数字127．0．0．1到127．255．255．255用于回路测试，如：127.0.0.1可以代表本机IP地址，用“<a href="http://127.0.0.1">http://127.0.0.1</a>”就可以测试本机中配置的Web服务器。</li>
+<li>网络ID的第一个8位组也不能全置为“0”，全“0”表示本地网络。</li>
+</ul>
+<h2 class="mume-header" id="socket">Socket</h2>
+
+<p>If your application only requires one thread during execution, use the following methods, which are designed for synchronous operation mode.<br>
+If you are using a connection-oriented protocol such as TCP, your server can listen for connections using the Listen method. The Accept method processes any incoming connection requests and returns a Socket that you can use to communicate data with the remote host. Use this returned Socket to call the Send or Receive method. Call the Bind method prior to calling the Listen method if you want to specify the local IP address and port number. Use a port number of zero if you want the underlying service provider to assign a free port for you. If you want to connect to a listening host, call the Connect method. To communicate data, call the Send or Receive method.<br>
+If you are using a connectionless protocol such as UDP, you do not need to listen for connections at all. Call the ReceiveFrom method to accept any incoming datagrams. Use the SendTo method to send datagrams to a remote host.<br>
+To process communications using separate threads during execution, use the following methods, which are designed for asynchronous operation mode.<br>
+If you are using a connection-oriented protocol such as TCP, use the Socket, BeginConnect, and EndConnect methods to connect with a listening host. Use the BeginSend and EndSend or BeginReceive and EndReceive methods to communicate data asynchronously. Incoming connection requests can be processed using BeginAccept and EndAccept.<br>
+If you are using a connectionless protocol such as UDP, you can use BeginSendTo and EndSendTo to send datagrams, and BeginReceiveFrom and EndReceiveFrom to receive datagrams.<br>
+If you perform multiple asynchronous operations on a socket, they do not necessarily complete in the order in which they are started.<br>
+When you are finished sending and receiving data, use the Shutdown method to disable the Socket. After calling Shutdown, call the Close method to release all resources associated with the Socket.<br>
+The Socket class allows you to configure your Socket using the SetSocketOption method. Retrieve these settings using the GetSocketOption method.<br>
+Note<br>
+If you are writing a relatively simple application and do not require maximum performance, consider using TcpClient, TcpListener, and UdpClient. These classes provide a simpler and more user-friendly interface to Socket communications.</p>
+<pre class="language-csharp"><span class="token comment" spellcheck="true">// Establish the local endpoint for the socket.</span>
+IPHostEntry ipHost <span class="token operator">=</span> Dns<span class="token punctuation">.</span><span class="token function">GetHostEntry</span><span class="token punctuation">(</span>Dns<span class="token punctuation">.</span><span class="token function">GetHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+IPAddress  ipAddr <span class="token operator">=</span> ipHost<span class="token punctuation">.</span>AddressList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+IPEndPoint ipEndPoint <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IPEndPoint</span><span class="token punctuation">(</span>ipAddr<span class="token punctuation">,</span> <span class="token number">11000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Create a TCP socket.</span>
+Socket client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Socket</span><span class="token punctuation">(</span>AddressFamily<span class="token punctuation">.</span>InterNetwork<span class="token punctuation">,</span>
+        SocketType<span class="token punctuation">.</span>Stream<span class="token punctuation">,</span> ProtocolType<span class="token punctuation">.</span>Tcp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Connect the socket to the remote endpoint.</span>
+client<span class="token punctuation">.</span><span class="token function">Connect</span><span class="token punctuation">(</span>ipEndPoint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// There is a text file test.txt located in the root directory.</span>
+<span class="token keyword">string</span> fileName <span class="token operator">=</span> <span class="token string">"C:\\test.txt"</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Send file fileName to remote device</span>
+Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Sending {0} to the host."</span><span class="token punctuation">,</span> fileName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+client<span class="token punctuation">.</span><span class="token function">SendFile</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Release the socket.</span>
+client<span class="token punctuation">.</span><span class="token function">Shutdown</span><span class="token punctuation">(</span>SocketShutdown<span class="token punctuation">.</span>Both<span class="token punctuation">)</span><span class="token punctuation">;</span>
+client<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Connect</span><span class="token punctuation">(</span>String server<span class="token punctuation">,</span> String message<span class="token punctuation">)</span> 
+<span class="token punctuation">{</span>
+  <span class="token keyword">try</span> 
+  <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Create a TcpClient.</span>
+    <span class="token comment" spellcheck="true">// Note, for this client to work you need to have a TcpServer </span>
+    <span class="token comment" spellcheck="true">// connected to the same address as specified by the server, port</span>
+    <span class="token comment" spellcheck="true">// combination.</span>
+    Int32 port <span class="token operator">=</span> <span class="token number">13000</span><span class="token punctuation">;</span>
+    TcpClient client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TcpClient</span><span class="token punctuation">(</span>server<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment" spellcheck="true">// Translate the passed message into ASCII and store it as a Byte array.</span>
+    Byte<span class="token punctuation">[</span><span class="token punctuation">]</span> data <span class="token operator">=</span> System<span class="token punctuation">.</span>Text<span class="token punctuation">.</span>Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetBytes</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>         
+
+    <span class="token comment" spellcheck="true">// Get a client stream for reading and writing.</span>
+   <span class="token comment" spellcheck="true">//  Stream stream = client.GetStream();</span>
+    
+    NetworkStream stream <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">GetStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Send the message to the connected TcpServer. </span>
+    stream<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Sent: {0}"</span><span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>         
+
+    <span class="token comment" spellcheck="true">// Receive the TcpServer.response.</span>
+    
+    <span class="token comment" spellcheck="true">// Buffer to store the response bytes.</span>
+    data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Byte</span><span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// String to store the response ASCII representation.</span>
+    String responseData <span class="token operator">=</span> String<span class="token punctuation">.</span>Empty<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Read the first batch of the TcpServer response bytes.</span>
+    Int32 bytes <span class="token operator">=</span> stream<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    responseData <span class="token operator">=</span> System<span class="token punctuation">.</span>Text<span class="token punctuation">.</span>Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetString</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Received: {0}"</span><span class="token punctuation">,</span> responseData<span class="token punctuation">)</span><span class="token punctuation">;</span>         
+
+    <span class="token comment" spellcheck="true">// Close everything.</span>
+    stream<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         
+    client<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         
+  <span class="token punctuation">}</span> 
+  <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArgumentNullException</span> e<span class="token punctuation">)</span> 
+  <span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"ArgumentNullException: {0}"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> 
+  <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">SocketException</span> e<span class="token punctuation">)</span> 
+  <span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"SocketException: {0}"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    
+  Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"\n Press Enter to continue..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Console<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyTcpListener</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span> 
+    TcpListener server<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>   
+    <span class="token keyword">try</span>
+    <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// Set the TcpListener on port 13000.</span>
+      Int32 port <span class="token operator">=</span> <span class="token number">13000</span><span class="token punctuation">;</span>
+      IPAddress localAddr <span class="token operator">=</span> IPAddress<span class="token punctuation">.</span><span class="token function">Parse</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+      <span class="token comment" spellcheck="true">// TcpListener server = new TcpListener(port);</span>
+      server <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TcpListener</span><span class="token punctuation">(</span>localAddr<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">// Start listening for client requests.</span>
+      server<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         
+      <span class="token comment" spellcheck="true">// Buffer for reading data</span>
+      Byte<span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Byte</span><span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      String data <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">// Enter the listening loop.</span>
+      <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">true</span><span class="token punctuation">)</span> 
+      <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span><span class="token string">"Waiting for a connection... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment" spellcheck="true">// Perform a blocking call to accept requests.</span>
+        <span class="token comment" spellcheck="true">// You could also user server.AcceptSocket() here.</span>
+        TcpClient client <span class="token operator">=</span> server<span class="token punctuation">.</span><span class="token function">AcceptTcpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Connected!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        data <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// Get a stream object for reading and writing</span>
+        NetworkStream stream <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">GetStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// Loop to receive all the data sent by the client.</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span>i <span class="token operator">=</span> stream<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>bytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytes<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span> 
+        <span class="token punctuation">{</span>   
+          <span class="token comment" spellcheck="true">// Translate data bytes to a ASCII string.</span>
+          data <span class="token operator">=</span> System<span class="token punctuation">.</span>Text<span class="token punctuation">.</span>Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetString</span><span class="token punctuation">(</span>bytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Received: {0}"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       
+          <span class="token comment" spellcheck="true">// Process the data sent by the client.</span>
+          data <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">ToUpper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> msg <span class="token operator">=</span> System<span class="token punctuation">.</span>Text<span class="token punctuation">.</span>Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetBytes</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment" spellcheck="true">// Send back a response.</span>
+          stream<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Sent: {0}"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>            
+        <span class="token punctuation">}</span>
+         
+        <span class="token comment" spellcheck="true">// Shutdown and end connection</span>
+        client<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">catch</span><span class="token punctuation">(</span>SocketException e<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"SocketException: {0}"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">finally</span>
+    <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true">// Stop listening for new clients.</span>
+       server<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+      
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"\nHit enter to continue..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>   
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// This constructor arbitrarily assigns the local port number.</span>
+UdpClient udpClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UdpClient</span><span class="token punctuation">(</span><span class="token number">11000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+         udpClient<span class="token punctuation">.</span><span class="token function">Connect</span><span class="token punctuation">(</span><span class="token string">"www.contoso.com"</span><span class="token punctuation">,</span> <span class="token number">11000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token comment" spellcheck="true">// Sends a message to the host to which you have connected.</span>
+         Byte<span class="token punctuation">[</span><span class="token punctuation">]</span> sendBytes <span class="token operator">=</span> Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetBytes</span><span class="token punctuation">(</span><span class="token string">"Is anybody there?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+         udpClient<span class="token punctuation">.</span><span class="token function">Send</span><span class="token punctuation">(</span>sendBytes<span class="token punctuation">,</span> sendBytes<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token comment" spellcheck="true">// Sends a message to a different host using optional hostname and port parameters.</span>
+         UdpClient udpClientB <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UdpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         udpClientB<span class="token punctuation">.</span><span class="token function">Send</span><span class="token punctuation">(</span>sendBytes<span class="token punctuation">,</span> sendBytes<span class="token punctuation">.</span>Length<span class="token punctuation">,</span> <span class="token string">"AlternateHostMachineName"</span><span class="token punctuation">,</span> <span class="token number">11000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token comment" spellcheck="true">//IPEndPoint object will allow us to read datagrams sent from any source.</span>
+         IPEndPoint RemoteIpEndPoint <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IPEndPoint</span><span class="token punctuation">(</span>IPAddress<span class="token punctuation">.</span>Any<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token comment" spellcheck="true">// Blocks until a message returns on this socket from a remote host.</span>
+         Byte<span class="token punctuation">[</span><span class="token punctuation">]</span> receiveBytes <span class="token operator">=</span> udpClient<span class="token punctuation">.</span><span class="token function">Receive</span><span class="token punctuation">(</span><span class="token keyword">ref</span> RemoteIpEndPoint<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+         <span class="token keyword">string</span> returnData <span class="token operator">=</span> Encoding<span class="token punctuation">.</span>ASCII<span class="token punctuation">.</span><span class="token function">GetString</span><span class="token punctuation">(</span>receiveBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+         <span class="token comment" spellcheck="true">// Uses the IPEndPoint object to determine which of these two hosts responded.</span>
+         Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"This is the message you received "</span> <span class="token operator">+</span>
+    	                              returnData<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"This message was sent from "</span> <span class="token operator">+</span>
+                                     RemoteIpEndPoint<span class="token punctuation">.</span>Address<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                                     <span class="token string">" on their port number "</span> <span class="token operator">+</span>
+                                     RemoteIpEndPoint<span class="token punctuation">.</span>Port<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          udpClient<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          udpClientB<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          
+          <span class="token punctuation">}</span>  
+       <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+</pre>
+<h2 class="mume-header" id="&#x53C2;&#x8003;&#x8D44;&#x6599;">参考资料</h2>
+
+<ol>
+<li>微软官方文档</li>
+<li>百度百科</li>
+</ol>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#c%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1">C#网络通信</a>
+<ul>
+<li><a href="#%E6%9C%89%E5%85%B3%E7%B1%BB">有关类</a></li>
+<li><a href="#ip%E5%9C%B0%E5%9D%80">IP地址</a></li>
+<li><a href="#socket">Socket</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    </body>
+    
+    
+    
+    <script>
+(function bindTaskListEvent() {
+  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
+  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
+    var checkbox = taskListItemCheckboxes[i]
+    var li = checkbox.parentElement
+    if (li.tagName !== 'LI') li = li.parentElement
+    if (li.tagName === 'LI') {
+      li.classList.add('task-list-item')
+    }
+  }
+}())    
+</script>
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  </html>

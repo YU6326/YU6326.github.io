@@ -83,6 +83,8 @@ $$
 
 ### 坐标变换
 
+基变换：$e'=eR_z(\alpha)R_x(\beta)R_z(\gamma)$,故
+
 设一点在旧坐标系的坐标为a,在新坐标系的坐标为A，则
 $$
 a=R_z(\alpha)R_x(\beta)R_z(\gamma)A

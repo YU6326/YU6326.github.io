@@ -165,7 +165,18 @@ $$
 又$(x,y,-f)^T=R^T(X,Y,Z)^T $
 
 所以
-（共线条件方程式、共线方程）
+记$T=R^T$
+$$
+\begin{pmatrix}
+x-x_0 \\ y-y_0 
+\end{pmatrix}=
+-f
+\begin{pmatrix}
+\frac{T[0]\cdot(A-S)}{T[2]\cdot(A-S)}\\
+\frac{T[1]\cdot(A-S)}{T[2]\cdot(A-S)}
+\end{pmatrix}
+$$
+（共线条件方程式、共线方程,$\lambda$被约掉）
 
 -------------
 
@@ -180,7 +191,7 @@ Y_A-Y_S\\
 Z_A-Z_S
 \end{pmatrix}
 $$
-（已知物方坐标，求像方坐标）
+（已知物方坐标，求像方坐标,将第三式化上去也可以约掉）
 它的逆变换为
 $$
 \begin{pmatrix}
