@@ -132,6 +132,11 @@ def demo14():#函数绘图
         endPnt.x+=0.5
         copyen.Move(basePnt,endPnt)
 
+def getxdata():
+    ss=acad.get_selection()
+    en=ss.Item(0)
+    en.GetXData("",dat)
+
 def test():#常量值
     print(ACAD.acRed)
     print(ACAD.acYellow)

@@ -395,7 +395,7 @@ S_{yy}=& ||Y-1\bar y||^2=||(Y-\hat Y)+(\hat Y-1\bar y)||^2\\
 =&||Y-\hat Y||^2+||\hat Y-1\bar y||^2+2(Y-\hat Y)'(\hat Y-1\bar y)
 \end{aligned}
 $$
-引用之前的A，P（投影阵）记号，显然$AP=0$y,又$||(Y-\hat Y||'1=0$
+引用之前的A，P（投影阵）记号，显然$AP=0$,又$(Y-\hat Y)'\mathbf{1}=0$
 $$
 \begin{aligned}
 (Y-\hat Y)'(\hat Y-1\bar y)=&(Y-\hat Y)'\hat Y-(Y-\hat Y)'1\bar y\\

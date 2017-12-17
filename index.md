@@ -64,3 +64,9 @@ github:[View on Github](https://github.com/YU6326/YU6326.github.io)
 * [C# GDI+绘图](posts/2017-11-22-gdi+.md)
 * [C# 网络通信](posts/2017-11-26-csharp3.html)
 * [C# 线程技术](posts/2017-11-26-csharp4.html)
+
+## Matrix
+
+* [矩阵与线性方程组](matrix/2017-12-10-matrix1.html)
+* [矩阵的逆与广义逆](matrix/2017-12-15-matrix2.html)
+* [矩阵分解](matrix/2017-12-16-matrix3.html)

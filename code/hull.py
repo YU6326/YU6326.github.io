@@ -76,11 +76,11 @@ def ConcaveHull():
         return
     # iset=[1,2,3,5,10,100]
     # for i in iset:
-    polyline,centerli,alpha=ptl.ConcaveHull(3)
+    polyline,centerli,alpha=ptl.ConcaveHull(1.5)
     en=acad.model.AddLightWeightPolyline(polyline)
     en.Closed=True
-    for c in centerli:
-        acad.model.AddCircle(c,alpha)
+    # for c in centerli:
+    #     acad.model.AddCircle(c,alpha)
     en.Color=ACAD.acMagenta
 
 if __name__=="__main__":

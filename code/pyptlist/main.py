@@ -255,7 +255,7 @@ class PointSet(tuple):
                             break
                 else:
                     return i,center
-            raise ValueError("没找到此圆")
+            raise ValueError("没找到下一点，请扩大半径")
         else:
             if len(circ)==2:
                 if circ[0]==vertex[-2]:
@@ -274,7 +274,7 @@ class PointSet(tuple):
                                     break
                         else:
                             return i,center
-            raise ValueError("未知错误")
+            raise ValueError("没找到下一点，请扩大半径")
     def __def_r(self):
         """
         定义搜索半径，保证每个搜索半径内至少有两个点
@@ -312,6 +312,9 @@ class PointSet(tuple):
     #         veci=[Vector(self[vertex[-1]],self[i]) for i in circ]
     #         anglelist=vec.angle(*veci)
     #         return circ[anglelist.index(min(anglelist))]
+
+
+######################################################################
         
 class Polyline(PointSet):
 
@@ -471,6 +474,164 @@ class Polyline(PointSet):
         coorlist.append(ptlistplus[self.L+tagclosed][1])
         return coorlist
 
+    def DDA(self):
+        """
+        直线的dda
+        返回格点的坐标
+        """
+        if self[0].x<=self[1].x:
+            start,end=self
+        else:
+            end,start=self #只希望从左到右
+        deltax=end.x-start.x
+        deltay=end.y-start.y
+        if deltax>=abs(deltay):
+            vertex=[APoint(start.x,start.y)]
+            k=deltay/deltax
+            while vertex[-1].x<end.x:
+                vertex.append(APoint(vertex[-1].x+1,vertex[-1].y+k))
+        else:
+            if start.y>end.y:
+                start,end=end,start #只希望从下到上
+            vertex=[APoint(start.x,start.y)]
+            k=deltax/deltay
+            while vertex[-1].y<end.y:
+                vertex.append(APoint(vertex[-1].x+k,vertex[-1].y+1))
+        vertexround=[]
+        for item in vertex:
+            vertexround.append(APoint(round(item.x),round(item.y)))
+        return vertexround
+
+# 以下为矢量转栅格的一些算法
+
+    def Bresenham(self,closed=False):
+        """
+        直线和折线的Bresenham
+        返回格点的坐标
+        """
+        if self.L==2:
+            if self[0].x<=self[1].x:
+                start,end=self
+            else:
+                end,start=self #只希望从左到右
+            deltax=end.x-start.x
+            deltay=end.y-start.y
+            if deltax>=abs(deltay):
+                vertex=[APoint(round(start.x),round(start.y))]
+                k=deltay/deltax
+                b=start.y-k*start.x
+                midx=vertex[-1].x+1
+                if k>=0:
+                    midy=vertex[-1].y+0.5
+                    d=midy-k*midx-b
+                    while vertex[-1].x<round(end.x):               
+                        if d>=0:
+                            vertex.append(APoint(vertex[-1].x+1,vertex[-1].y))
+                            d=d-k
+                        else:
+                            vertex.append(APoint(vertex[-1].x+1,vertex[-1].y+1))
+                            d=d+1-k
+                else:
+                    midy=vertex[-1].y-0.5
+                    d=midy-k*midx-b
+                    while vertex[-1].x<round(end.x):               
+                        if d<=0:
+                            vertex.append(APoint(vertex[-1].x+1,vertex[-1].y))
+                            d=d-k
+                        else:
+                            vertex.append(APoint(vertex[-1].x+1,vertex[-1].y-1))
+                            d=d-1-k
+
+            else:
+                if start.y>end.y:
+                    start,end=end,start #只希望从下到上
+                vertex=[APoint(round(start.x),round(start.y))]
+                k=deltax/deltay
+                b=start.x-k*start.y
+                midy=vertex[-1].y+1
+                if k>0:
+                    midx=vertex[-1].x+0.5
+                    d=midx-k*midy-b
+                    while vertex[-1].y<round(end.y):
+                        if d>=0:
+                            vertex.append(APoint(vertex[-1].x,vertex[-1].y+1))
+                            d=d-k
+                        else:
+                            vertex.append(APoint(vertex[-1].x+1,vertex[-1].y+1))
+                            d=d+1-k
+                else:
+                    midx=vertex[-1].x-0.5
+                    d=midx-k*midy-b
+                    while vertex[-1].y<round(end.y):
+                        if d<=0:
+                            vertex.append(APoint(vertex[-1].x,vertex[-1].y+1))
+                            d=d-k
+                        else:
+                            vertex.append(APoint(vertex[-1].x-1,vertex[-1].y+1))
+                            d=d-1-k
+            return vertex
+        else:
+            vertex=[]
+            for i in range(-self.L,closed):
+                line=Polyline([self[i],self[i+1]])
+                v=line.Bresenham()
+                vertex+=v
+            return vertex
+        
+    def FillPolygon(self):
+        minp,maxp=self.GetBoundingBox()
+        ymin=ceil(minp.y)
+        ymax=floor(maxp.y)
+        fillpo=[]
+        for y in range(ymin,ymax+1):
+            xlist=self.GetIntersection(y)
+            for i in range(0,len(xlist),2):
+                p1x=ceil(xlist[i])
+                p2x=xlist[i+1]
+                if p2x!=int(p2x):
+                    p2x=floor(p2x)
+                else:
+                    p2x-=1
+                for j in range(p1x,p2x+1):
+                    fillpo.append(APoint(j,y))
+        return fillpo
+
+
+    def GetIntersection(self,y):
+        """
+        求y=y这条直线与多边形的交点，返回交点横坐标
+        """
+        retv=[]
+        for i in range(-self.L+1,1):
+            p1=self[i]
+            p2=self[i+1]
+            maxy=max(p1.y,p2.y)
+            miny=min(p1.y,p2.y)
+            if y<miny or y>maxy:#没交点
+                pass
+            elif y>miny and y<maxy:
+                x=(y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x
+                retv.append(x)
+            elif y==p1.y:
+                p11=self[i-1]
+                if (p11.y-p1.y)*(p2.y-p1.y)>0:
+                    pass
+                else:
+                    retv.append(p1.x)
+            else:
+                p22=self[i+1]
+                if(p22.y-p2.y)*(p1.y-p2.y)>0:
+                    pass
+                else:
+                    retv.append(p2.x)
+        retv=list(set(retv))
+        retv.sort()
+        assert len(retv)%2==0
+        return retv
+
+        
+
+                
 
 
 
