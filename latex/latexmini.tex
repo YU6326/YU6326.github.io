@@ -24,6 +24,7 @@
 \newcommand{\ud}{\,\mathrm{d}}
 
 \newtheorem{Theorem}{定理}
+\newtheorem{Lemma}{引理}
 
 \title{\heiti 不等式选讲}
 \author{\kaishu 余周炜\thanks{Email: \href{mailto:yuzhouwei6326@outlook.com}{yuzhouwei6326@outlook.com}}}
@@ -313,6 +314,8 @@ f(tx_1+(1-t)x_2)\le tf(x_1)+(1-t)f(x_2) \label{eq:twopoint}
 f(\sum_i\lambda_ix_i)\le \sum_i\lambda_i f(x_i) \label{eq:jensen}
 \end{equation}
 
+当且仅当$x_1=x_2=x_3=\ldots=x_n$时取等号。
+
 该式被称为Jensen不等式。
 
 在概率论中，如果X是一个随机变量，$\varphi$是一个凸函数：
@@ -444,6 +447,42 @@ g(t)= \mathbf E((tX-Y)^2)=t^2(\mathbf E(X^2))-2t\mathbf E(XY)+\mathbf E(Y^2)
 \end{equation}
 
 \section{赫尔德不等式}
+
+赫尔德不等式(H\"{o}lder's inequality)是数学分析的一条不等式，取名自(Otto H\"{o}lder)。这是一条揭示$L^p$空间的相互关系的基本不等式：
+
+设S为测度空间，$1\le p,q\le\infty$,及$\frac{1}{p}+\frac{1}{q}=1$，设$f$在$L^p(S)$内，$g$在$L^q(S)$。则$fg$在$L^1(S)$内，且有
+$$\|fg\|_1\le \|f\|_p\|g\|_q$$
+
+若S取作$\{1,\ldots,n\}$附计数测度，便得赫尔德不等式的特殊情形：对所有实数（或复数）$x_1,\ldots,x_n$；$y_1,\ldots,y_n$，有
+\begin{equation}
+\sum_{k=1}^n|x_ky_k|\le\left(\sum_{k=1}^n|x_k|^p\right)^{1/p}\left(\sum_{k=1}^n|y_k|^q\right)^{1/q}
+\end{equation}
+
+我们称$p$,$q$互为赫尔德共轭。
+
+若取$S$为自然数集附计数测度，便得与上类似的无穷级数不等式。
+
+当$p=q=2$,便得到柯西-施瓦茨不等式(Cauchy-Schwarz inequality)。
+
+\subsection{证明}
+
+在数学中，杨氏不等式（Young's inequality for products)是一个关于两个数乘积的不等式，该不等式以William Henry Young的名字命名。
+
+\begin{Lemma}[杨氏不等式]
+如果$a,b$是非负实数，$p,q$是大于1的实数满足$\displaystyle \frac{1}{p}+\frac{1}{q}=1$，
+\begin{equation}
+ab\le\frac{a^p}{p}+\frac{b^q}{q}
+\end{equation}
+
+当且仅当$a^p=b^q$时取等号。
+\end{Lemma}
+\begin{proof}
+$a=0$或$b=0$时显然成立。因此假定$a>0,b>0$,令$t=1/p,1-t=1/q$，因为对数函数是凹的，
+\begin{equation}
+\ln(ta^p+(1-t)b^q)\ge t\ln(a^p)+(1-t)\ln(b^q)=\ln(a)+\ln(b)=\ln(ab)
+\end{equation}
+当且仅当$a^p=b^q$时取等号。
+\end{proof}
 
 
 \section{排序不等式}
