@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.8.18)  27 OCT 2019 14:22
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.8.18)  28 OCT 2019 22:09
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1225,39 +1225,40 @@ Package fontspec Info: Font family 'KaiTi(0)' created for font 'KaiTi' with
 
  [1
 
-] (./latexmini.toc)
+] (./latexmini.toc
+LaTeX Font Info:    Font shape `TU/SimSun(0)/m/sl' in size <10.53937> not available
+(Font)              Font shape `TU/SimSun(0)/m/it' tried instead on input line 33.
+ [2
+
+])
 \tf@toc=\write6
 \openout6 = `latexmini.toc'.
 
-LaTeX Font Info:    Font shape `TU/SimSun(0)/m/sl' in size <10.53937> not available
-(Font)              Font shape `TU/SimSun(0)/m/it' tried instead on input line 41.
- [2
-
-] [3] [4]
+ [3] [4]
 Missing character: There is no ， in font [lmroman10-regular]:mapping=tex-text;!
  [5]
 File: mean.png Graphic file (type bmp)
 <mean.png>
- [6] [7] [8]
+ [6] [7] [8] [9]
 File: convex.png Graphic file (type bmp)
 <convex.png>
- [9] [10] [11] [12] [13] [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 541.
- [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 541.
+ [10] [11] [12] [13] [14] [15] [16] [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 691.
+ [18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 691.
  (./latexmini.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 541.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 541.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 691.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 691.
 Package rerunfilecheck Info: File `latexmini.out' has not changed.
-(rerunfilecheck)             Checksum: 7C0D923E29CDA38E611CA87F26D9916D.
+(rerunfilecheck)             Checksum: FC473DDD241CB11B4D0ECD33C46618EF.
  ) 
 Here is how much of TeX's memory you used:
- 30326 strings out of 492922
- 606132 string characters out of 6136751
- 727105 words of memory out of 5000000
- 34002 multiletter control sequences out of 15000+600000
+ 30343 strings out of 492922
+ 607084 string characters out of 6136751
+ 728623 words of memory out of 5000000
+ 34019 multiletter control sequences out of 15000+600000
  542182 words of font info for 104 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  54i,13n,68p,903b,545s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on latexmini.pdf (15 pages).
+Output written on latexmini.pdf (18 pages).

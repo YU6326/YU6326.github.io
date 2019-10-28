@@ -247,7 +247,7 @@ $x_{n+1}-x_n=a_{n+1}[(1+a_1)\cdots(1+a_n)-1]$。
 
 \section{权方和不等式}
 
-设$a_i,b_i> 0,i=1,2,\cdots,n,k\in N^+$,则
+设$a_i,b_i> 0,i=1,2,\cdots,n,k>0$,则
 \begin{equation}
 \frac{a_1^{k+1}}{b_1^k}+\frac{a_2^{k+1}}{b_2^k}+\cdots+\frac{a_n^{k+1}}{b_n^k}\ge \frac{(a_1+a_2+\cdots+a_n)^{k+1}}{(b_1+b_2+\cdots+b_n)^k}
 \end{equation}
@@ -267,7 +267,7 @@ t &=(b_1+b_2+\cdots+b_n)^{-1}
 \frac{(sa_i)^{k+1}}{(tb_i)^k} 
 =& tb_i\cdot\left(\frac{sa_i}{tb_i}\right)^{k+1} \\
 \ge & tb_i\left[1+(k+1)(\frac{sa_i}{tb_i}-1)\right] \\
-& tb_i\left[(k+1)\frac{sa_i}{tb_i}-k\right]=(k+1)sa_i-ktb_i
+=& tb_i\left[(k+1)\frac{sa_i}{tb_i}-k\right]=(k+1)sa_i-ktb_i
 \end{align}
 
 则
@@ -279,6 +279,44 @@ t &=(b_1+b_2+\cdots+b_n)^{-1}
 \frac{a_1^{k+1}}{b_1^k}+\frac{a_2^{k+1}}{b_2^k}+\cdots+\frac{a_n^{k+1}}{b_n^k}\ge \frac{(a_1+a_2+\cdots+a_n)^{k+1}}{(b_1+b_2+\cdots+b_n)^k}
 \end{equation}
 
+\section{舒尔不等式}
+
+舒尔不等式(Schur's Inequality)是一个对于正数成立的不等式，由Issai Schur的名字命名。
+
+对于非负实数$a,b,c\in\mathbb R$和$r>0$:
+\begin{equation}
+a^r(a-b)(a-c)+b^r(b-a)(b-c)+c^r(c-a)(c-b)\ge 0
+\end{equation}
+
+当$a=b=c$或$a,b,c$中有两个相等，另一个为0时取“=”。
+
+
+\subsection{证明}
+不失一般性（WLOG,Without Loss Of Generality),令$a\ge b\ge c$，注意到
+\begin{align}
+&a^r(a-b)(a-c)+b^r(b-a)(b-c) \\
+=& a^r(a-b)(a-c)-b^r(a-b)(b-c)=(a-b)(a^r(a-c)-b^r(b-c))
+\end{align}
+显然，$a^r\ge b^r\ge 0$，并且$a-c\ge b-c\ge 0$,因此
+\begin{align}
+&(a-b)(a^r(a-c)-b^r(b-c))\ge 0 \\
+\implies & a^r(a-b)(a-c)+b^r(b-a)(b-c)\ge 0
+\end{align}
+
+
+又因为$c^r(c-a)(c-b)\ge 0$,原命题得证。
+
+\subsection{一般形式}
+
+$a,b,c,x,y,z\in\mathbb R$满足$a\ge b\ge c,x\ge y\ge z$或$z\ge y\ge x$。令$k\in\mathbb Z^+$,$f:\mathbb R\to\mathbb R_0^+$ 凸或者单调，那么
+\begin{equation}
+f(x)(a-b)^k(a-c)^k+f(y)(b-a)^k(b-c)^k+f(z)(c-a)^k(c-b)^k\ge 0
+\end{equation}
+
+标准形式即
+\begin{equation}
+x=a,y=b,z=c,k=1,f(m)=m^r
+\end{equation}
 
 \section{琴生不等式}
 
@@ -450,7 +488,7 @@ g(t)= \mathbf E((tX-Y)^2)=t^2(\mathbf E(X^2))-2t\mathbf E(XY)+\mathbf E(Y^2)
 
 赫尔德不等式(H\"{o}lder's inequality)是数学分析的一条不等式，取名自(Otto H\"{o}lder)。这是一条揭示$L^p$空间的相互关系的基本不等式：
 
-设S为测度空间，$1\le p,q\le\infty$,及$\frac{1}{p}+\frac{1}{q}=1$，设$f$在$L^p(S)$内，$g$在$L^q(S)$。则$fg$在$L^1(S)$内，且有
+设S为测度空间，$1\le p,q\le\infty$,及$\displaystyle \frac{1}{p}+\frac{1}{q}=1$，设$f$在$L^p(S)$内，$g$在$L^q(S)$。则$fg$在$L^1(S)$内，且有
 $$\|fg\|_1\le \|f\|_p\|g\|_q$$
 
 若S取作$\{1,\ldots,n\}$附计数测度，便得赫尔德不等式的特殊情形：对所有实数（或复数）$x_1,\ldots,x_n$；$y_1,\ldots,y_n$，有
@@ -484,10 +522,24 @@ $a=0$或$b=0$时显然成立。因此假定$a>0,b>0$,令$t=1/p,1-t=1/q$，因为
 当且仅当$a^p=b^q$时取等号。
 \end{proof}
 
+\begin{proof}
+如果$1<p,q<\infty$,由杨氏不等式可得：
+
+对于$n\in\mathbb N$
+\begin{equation}
+\sum_{k=1}^n\frac{|x_k|}{\|\mathbf{x}\|_p}\frac{|y_k|}{\|\mathbf{y}\|_q}\le\sum_{k=1}^n\left(\frac{1}{p}\frac{|x_k|^p}{\|\mathbf x\|_p^p}+\frac{1}{q}\frac{|y_k|^q}{\|\mathbf{y}\|_q^q}\right)\le\frac{1}{p}+\frac{1}{q}=1
+\end{equation}
+
+因此对于任意$n\in\mathbb N$
+\begin{equation}
+\sum_{k=1}^n|x_ky_k|\le\|\mathbf x\|_p\|\mathbf y\|_q
+\end{equation}
+\end{proof}
+
 
 \section{排序不等式}
 
-排序不等式又称排序原理，设$a_1\le a_2\le \cdots a_n,b_1\le b_2\le\cdots b_n$,$c_1,c_2,\cdots,c_n$是$b_1,b_2,\cdots,b_n$的任一排列，则
+排序不等式(Rearrangement Inequality)又称排序原理，设$a_1\le a_2\le \cdots a_n,b_1\le b_2\le\cdots b_n$,$c_1,c_2,\cdots,c_n$是$b_1,b_2,\cdots,b_n$的任一排列，则
 \begin{equation}
  \underbrace{a_1b_n+a_2b_{n-1}+\cdots+a_nb_1}_{\text{反序和}}\le \underbrace{a_1c_1+a_2c_2+\cdots a_nc_n}_{\text{乱序和}}\le\underbrace{a_1b_1+a_2b_2+\cdots+a_nb_n}_{\text{顺序和}} 
 \end{equation}
@@ -525,11 +577,109 @@ S'-S=a_1c_k+a_kc_1-a_1c_1-a_kc_k=(a_k-a_1)(c_1-c_k)\ge 0
 
 \section{切比雪夫总和不等式}
 
+如果
+\begin{align}
+a_1&\ge a_2\ge\cdots\ge a_n \\
+b_1&\ge b_2\ge\cdots\ge b_n
+\end{align}
+\begin{equation}
+\frac{1}{n}\sum_{k=1}^na_k\cdot b_k\ge\left(\frac{1}{n}\sum_{k=1}^na_k\right)\left(\frac{1}{n}\sum_{k=1}^nb_k\right) \label{eq:chebyshev}
+\end{equation}
+类似的，如果
+\begin{align}
+a_1&\le a_2\le\cdots\le a_n \\
+b_1&\ge b_2\ge\cdots\ge b_n
+\end{align}
+
+那么
+\begin{equation}
+\frac{1}{n}\sum_{k=1}^na_k\cdot b_k\le \left(\frac{1}{n}\sum_{k=1}^na_k\right)\left(\frac{1}{n}\sum_{k=1}^nb_k\right)
+\end{equation}
+
+\subsection{证明}
+\begin{proof}
+由排序不等式(Rearrangement inequality)可知
+$$S=a_1b_{i_1}+a_2b_{i_2}+\ldots+a_nb_{i_n}
+$$当$i_k=k$时取最大值。
+
+\begin{align}
+\sum_{i=1}^na_ib_i\ge& a_1b_1+a_2b_2+\ldots+a_nb_n \\
+\sum_{i=1}^na_ib_i\ge& a_1b_2+a_2b_3+\ldots+a_nb_1 \\
+\ldots& \\
+\sum_{i=1}^n a_ib_i\ge& a_1b_n+a_2b_1+\ldots+a_nb_{n-1}
+\end{align}
+
+将上述不等式相加，可得不等式\eqref{eq:chebyshev}。
+\end{proof}
+
+
 \section{三角不等式}
+
+\paragraph{三角不等式}
+$\mathbf{x},\mathbf{y}\in \mathbb R^n$,
+
+\begin{equation}
+\|\mathbf{x}+\mathbf{y}\|\le\|\mathbf{x}\|+\|\mathbf{y}\|
+\end{equation}
+
+\paragraph{绝对值不等式}
+对实数a,b有：
+\begin{equation}
+||a|-|b||\le |a\pm b|\le|a|+|b|
+\end{equation}
+
+
 
 \section{闵可夫斯基不等式}
 
+在数学分析中，闵可夫斯基不等式(Minkowski Inequality)表明$L^p$空间是赋范向量空间(normed vector spaces),令$S$是一个测度空间，令$1\le p\le \infty$，$f,g$是$L^p(S)$空间中的元素,那么$f+g$也在$L^p(S)$中，我们有不等式：
+\begin{equation}
+\|f+g\|_p\le\|f\|_p+\|g\|_p
+\end{equation}
 
+特殊地，在计数测度下有：
+\begin{equation}
+\left(\sum_{k=1}^n|x_k+y_k|^p\right)^{1/p}\le\left(\sum_{k=1}^n|x_k|^p\right)^{1/p}+
+\left(\sum_{k=1}^n|y_k|^p\right)^{1/p}
+\end{equation}
+
+\subsection{证明}
+不失一般性，假定:
+\begin{equation}
+\sum_{k=1}^n(a_k+b_k)^p\neq 0
+\end{equation}
+
+定义:
+$$
+q=\frac{p}{p-1}
+$$
+
+\begin{equation}
+\frac{1}{p}+\frac{1}{q}=\frac{1}{p}+\frac{p-1}{p}=1
+\end{equation}
+
+\begin{align}
+\sum_{k=1}^n(a_k+b_k)^p
+=&\sum_{k=1}^na_k(a_k+b_k)^{p-1}+\sum_{k=1}^nb_k(a_k+b_k)^{p-1} \\
+\le& \left(\sum_{k=1}^n a_k^p\right)^{1/p}\left(\sum_{k=1}^n (a_k+b_k)^p\right)^{1/q}+\left(\sum_{k=1}^n b_k^p\right)^{1/p}\left(\sum_{k=1}^n (a_k+b_k)^p\right)^{1/q} \\
+=&\left(\left(\sum_{k=1}^n a_k^p\right)^{1/p}+\left(\sum_{k=1}^n b_k^p\right)^{1/p}\right)\left(\sum_{k=1}^n(a_k+b_k)^p\right)^{1/q}
+\end{align}
+
+两边同时除以：
+\begin{equation}
+\left(\sum_{k=1}^n(a_k+b_k)^p\right)^{1/q}
+\end{equation}
+
+并注意到
+\begin{equation}
+1-\frac{1}{q}=\frac{1}{p}
+\end{equation}
+
+有:
+\begin{equation}
+\left(\sum_{k=1}^n(x_k+y_k)^p\right)^{1/p}\le\left(\sum_{k=1}^nx_k^p\right)^{1/p}+
+\left(\sum_{k=1}^ny_k^p\right)^{1/p}
+\end{equation}
 % \backmatter
 \begin{thebibliography}{99}
 \bibitem{wiki}Wikipedia
