@@ -1,0 +1,9 @@
+_minted-slides/
+*.aux
+*.bcf
+*.log
+*.nav
+*.rum.xml
+*.snm
+*.synctex.gz
+*.vrb
